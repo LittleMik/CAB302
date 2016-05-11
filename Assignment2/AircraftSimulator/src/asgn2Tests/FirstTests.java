@@ -17,30 +17,17 @@ import asgn2Passengers.PassengerException;
  *
  */
 public class FirstTests {
-	/** Test variables **/
+	/** TEST VARIABLES **/
 	private Passenger p;
+	private First testPassenger;
 	
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@Before
 	public void setUp() throws Exception {
-	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.First#noSeatsMsg()}.
-	 */
-	@Test
-	public void testNoSeatsMsg() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.First#upgrade()}.
-	 */
-	@Test
-	public void testUpgrade() {
-		fail("Not yet implemented");
+		int bookingTime = 10, departureTime = 10;
+		testPassenger = new First(bookingTime, departureTime);
 	}
 
 	/**--------- FIRST: CONSTRUCTOR TESTS ---------**/
@@ -59,6 +46,27 @@ public class FirstTests {
 	@Test
 	public void testFirst() {
 		fail("Not yet implemented");
+	}
+	
+	/**--------- FIRST: OTHER TESTS ---------**/
+	
+	/**
+	 * Test method for {@link asgn2Passengers.First#upgrade()}.
+	 */
+	@Test
+	public void testUpgrade() {
+		Passenger upgradedPassenger = testPassenger.upgrade();
+		//Verify first character of the testPassenger ID identifies First Class ('F') and do not change
+		assertEquals(testPassenger.getPassID().charAt(0), upgradedPassenger.getPassID().charAt(0));
+	}
+	
+	//Maybe I should remove this seeing it's practically a getter?
+	/**
+	 * Test method for {@link asgn2Passengers.First#noSeatsMsg()}.
+	 */
+	@Test
+	public void testNoSeatsMsg() {
+		assertEquals(testPassenger.noSeatsMsg(), "No seats available in First");
 	}
 
 	/**--------- PASSENGER TESTS: CONSTRUCTOR ---------**/
