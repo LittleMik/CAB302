@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import asgn2Passengers.Economy;
 import asgn2Passengers.Passenger;
-import asgn2Passengers.Premium;
+import asgn2Passengers.PassengerException;
 
 /**
  * @author Michael Smallcombe
@@ -18,8 +18,9 @@ import asgn2Passengers.Premium;
  */
 public class EconomyTests {
 	/** TEST VARIABLES **/
-	private Economy testPassenger;
-
+	private Economy testPassenger, testEconomyPassenger;
+	
+	/**--------- ECONOMY: SETUP---------**/
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -28,13 +29,25 @@ public class EconomyTests {
 		int bookingTime = 10, departureTime = 10;
 		testPassenger = new Economy(bookingTime, departureTime);
 	}
-
+	
+	/**--------- ECONOMY: CONSTRUCTOR TESTS---------**/
+	/**
+	 * Test method for {@link asgn2Passengers.Economy#Economy(int, int)}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testEconomyIntInt() throws PassengerException {
+		int bookingTime = 10, departureTime = 10;
+		testEconomyPassenger = new Economy(bookingTime, departureTime);
+	}
+	
+	/**--------- ECONOMY: OTHER TESTS---------**/
 	/**
 	 * Test method for {@link asgn2Passengers.Economy#noSeatsMsg()}.
 	 */
 	@Test
 	public void testNoSeatsMsg() {
-		fail("Not yet implemented");
+		assertEquals(testPassenger.noSeatsMsg(), "No seats available in Economy");
 	}
 
 	/**
@@ -55,12 +68,5 @@ public class EconomyTests {
 		assertEquals(upgradedPassenger.getPassID().charAt(0), 'P');
 	}
 
-	/**
-	 * Test method for {@link asgn2Passengers.Economy#Economy(int, int)}.
-	 */
-	@Test
-	public void testEconomy() {
-		fail("Not yet implemented");
-	}
 
 }

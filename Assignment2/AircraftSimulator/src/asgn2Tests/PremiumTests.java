@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import asgn2Passengers.Business;
 import asgn2Passengers.Passenger;
+import asgn2Passengers.PassengerException;
 import asgn2Passengers.Premium;
 
 /**
@@ -18,8 +19,9 @@ import asgn2Passengers.Premium;
  */
 public class PremiumTests {
 	/** TEST VARIABLES **/
-	private Premium testPassenger;
+	private Premium testPassenger, testPremiumPassenger;
 	
+	/**--------- PREMIUM: SETUP---------**/
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -29,8 +31,18 @@ public class PremiumTests {
 		testPassenger = new Premium(bookingTime, departureTime);
 	}
 	
-	/**--------- PREMIUM TESTS: OTHER ---------**/
+	/**--------- PREMIUM: CONSTRUCTOR TESTS---------**/
+	/**
+	 * Test method for {@link asgn2Passengers.Premium#Premium(int, int)}.
+	 * @throws PassengerException
+	 */
+	@Test
+	public void testPremiumIntInt() throws PassengerException {
+		int bookingTime = 10, departureTime = 10;
+		testPremiumPassenger = new Premium(bookingTime, departureTime);
+	}
 	
+	/**--------- PREMIUM: OTHER TESTS---------**/
 	/**
 	 * Test method for {@link asgn2Passengers.Premium#upgrade()}.
 	 */
@@ -56,23 +68,4 @@ public class PremiumTests {
 	public void testNoSeatsMsg() {
 		assertEquals(testPassenger.noSeatsMsg(), "No seats available in Premium");
 	}
-	
-	/**--------- PREMIUM TESTS: CONSTRUCTOR ---------**/
-	
-	/**
-	 * Test method for {@link asgn2Passengers.Premium#Premium(int, int)}.
-	 */
-	@Test
-	public void testPremiumIntInt() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.Premium#Premium()}.
-	 */
-	@Test
-	public void testPremium() {
-		fail("Not yet implemented");
-	}
-
 }

@@ -19,8 +19,9 @@ import asgn2Passengers.PassengerException;
 public class FirstTests {
 	/** TEST VARIABLES **/
 	private Passenger p;
-	private First testPassenger;
+	private First testPassenger, testFirstPassenger;
 	
+	/**--------- FIRST: SETUP ---------**/	
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -30,26 +31,18 @@ public class FirstTests {
 		testPassenger = new First(bookingTime, departureTime);
 	}
 
-	/**--------- FIRST: CONSTRUCTOR TESTS ---------**/
-	
+	/**--------- FIRST: CONSTRUCTOR TESTS ---------**/	
 	/**
 	 * Test method for {@link asgn2Passengers.First#First(int, int)}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testFirstIntInt() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.First#First()}.
-	 */
-	@Test
-	public void testFirst() {
-		fail("Not yet implemented");
+	public void testFirstIntInt() throws PassengerException {
+		int bookingTime = 10, departureTime = 10;
+		testFirstPassenger = new First(bookingTime, departureTime);
 	}
 	
-	/**--------- FIRST: OTHER TESTS ---------**/
-	
+	/**--------- FIRST: OTHER TESTS ---------**/	
 	/**
 	 * Test method for {@link asgn2Passengers.First#upgrade()}.
 	 */
@@ -69,20 +62,9 @@ public class FirstTests {
 		assertEquals(testPassenger.noSeatsMsg(), "No seats available in First");
 	}
 
-	/**--------- PASSENGER TESTS: CONSTRUCTOR ---------**/
-	
+	/**--------- PASSENGER: CONSTRUCTOR TESTS---------**/	
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#Passenger(int, int)}.
-	 */
-	@Test
-	public void testPassengerIntInt() {
-		fail("Not yet implemented");
-	}
-	
-	/**--- Constructor Exception Tests ---**/
-	
-	/**
-	 * Test method for {@link asgn2Passengers.Passenger#Passenger()}.
 	 * @throws PassengerException 
 	 */
 	@Test(expected=PassengerException.class)
@@ -92,7 +74,7 @@ public class FirstTests {
 	}
 	
 	/**
-	 * Test method for {@link asgn2Passengers.Passenger#Passenger()}.
+	 * Test method for {@link asgn2Passengers.Passenger#Passenger(int, int)}.
 	 * @throws PassengerException 
 	 */
 	@Test(expected=PassengerException.class)
@@ -102,7 +84,7 @@ public class FirstTests {
 	}
 	
 	/**
-	 * Test method for {@link asgn2Passengers.Passenger#Passenger()}.
+	 * Test method for {@link asgn2Passengers.Passenger#Passenger(int, int)}.
 	 * @throws PassengerException 
 	 */
 	@Test(expected=PassengerException.class)
@@ -112,7 +94,7 @@ public class FirstTests {
 	}
 	
 	/**
-	 * Test method for {@link asgn2Passengers.Passenger#Passenger()}.
+	 * Test method for {@link asgn2Passengers.Passenger#Passenger(int, int)}.
 	 * @throws PassengerException 
 	 */
 	@Test(expected=PassengerException.class)
@@ -121,8 +103,8 @@ public class FirstTests {
 		p = new First(bookingTime, departureTime);
 	}
 	
-	/**--------- PASSENGER TESTS: STATE TRANSITION TESTS ---------**/
-
+	/**--------- PASSENGER: STATE TRANSITION TESTS ---------**/
+	/**---CancelSeat Tests---**/
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#cancelSeat(int)}.
 	 */
@@ -130,7 +112,8 @@ public class FirstTests {
 	public void testCancelSeat() {
 		fail("Not yet implemented");
 	}
-
+	
+	/**---ConfirmSeat Tests---**/
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#confirmSeat(int, int)}.
 	 */
@@ -138,7 +121,8 @@ public class FirstTests {
 	public void testConfirmSeat() {
 		fail("Not yet implemented");
 	}
-
+	
+	/**---FlyPassenger Tests---**/
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#flyPassenger(int)}.
 	 */
@@ -146,7 +130,8 @@ public class FirstTests {
 	public void testFlyPassenger() {
 		fail("Not yet implemented");
 	}
-
+	
+	/**---QueuePassenger Tests---**/
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#queuePassenger(int, int)}.
 	 */
@@ -154,7 +139,8 @@ public class FirstTests {
 	public void testQueuePassenger() {
 		fail("Not yet implemented");
 	}
-
+	
+	/**---RefusePassenger Tests---**/
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#refusePassenger(int)}.
 	 */
@@ -162,15 +148,8 @@ public class FirstTests {
 	public void testRefusePassenger() {
 		fail("Not yet implemented");
 	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.Passenger#toString()}.
-	 */
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
-
+	
+	/**--------- PASSENGER: OTHER TESTS ---------**/
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#wasConfirmed()}.
 	 */
@@ -186,13 +165,4 @@ public class FirstTests {
 	public void testWasQueued() {
 		fail("Not yet implemented");
 	}
-
-	/**
-	 * Test method for {@link asgn2Passengers.Passenger#copyPassengerState(asgn2Passengers.Passenger)}.
-	 */
-	@Test
-	public void testCopyPassengerState() {
-		fail("Not yet implemented");
-	}
-
 }
