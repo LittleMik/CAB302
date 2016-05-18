@@ -41,7 +41,7 @@ public class BusinessTests {
 		int bookingTime = 10, departureTime = 10;
 		testBusinessPassenger = new Business(bookingTime, departureTime);
 	}
-
+	
 	/**--------- BUSINESS: OTHER TESTS---------**/
 	/**
 	 * Test method for {@link asgn2Passengers.Business#upgrade()}.

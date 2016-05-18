@@ -103,7 +103,7 @@ public abstract class Aircraft {
 		//Exceptions
 		if(!p.isConfirmed()){
 			throw new PassengerException("Invalid passenger state");
-		}else if(this.departureTime > cancellationTime || cancellationTime < 0){
+		}else if(this.departureTime < cancellationTime || cancellationTime < 0){
 			throw new PassengerException("Invalid cancellation time");		
 		}else if(!seats.contains(p)){
 			throw new AircraftException("Passenger not found on flight");				

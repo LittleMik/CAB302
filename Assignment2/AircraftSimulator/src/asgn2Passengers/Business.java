@@ -20,8 +20,12 @@ public class Business extends Passenger {
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
 	public Business(int bookingTime, int departureTime) throws PassengerException {
-		//Stuff here
-		this.passID = "J:" + this.passID;
+		//if((bookingTime <= 0 )||(departureTime <= 0)||(bookingTime > departureTime)){
+		//	throw new PassengerException("Invalid parameters");
+		//}else{
+			super(bookingTime, departureTime);
+			this.passID = "J:" + this.passID;
+		//}
 	}
 	
 	/**
@@ -38,6 +42,7 @@ public class Business extends Passenger {
 
 	@Override
 	public Passenger upgrade() {
-	
+		this.passID = "F:" + this.passID;
+		return this;
 	}
 }

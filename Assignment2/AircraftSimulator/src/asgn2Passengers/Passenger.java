@@ -76,6 +76,8 @@ public abstract class Passenger {
 			throw new PassengerException("Invalid booking time");
 		}else if(departureTime <= 0){
 			throw new PassengerException("Invalid departure time");
+		}else if(departureTime < bookingTime){
+			throw new PassengerException("Invalid times");
 		}else{
 			this.passID = "" + Passenger.index; 
 			Passenger.index++; 
