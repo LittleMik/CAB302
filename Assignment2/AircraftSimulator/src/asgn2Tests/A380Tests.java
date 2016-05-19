@@ -70,13 +70,12 @@ public class A380Tests {
 		tempFlight.confirmBooking(tempPassenger, 10);	
 		tempPassenger.confirmSeat(10, 13);
 		tempFlight.cancelBooking(tempPassenger, 1);
-		assertEquals(tempFlight.getPassengers(), true);
-
+		assertTrue(tempFlight.getPassengers().isEmpty());
 	}
 	
 	@Test(expected = PassengerException.class)
 	public void CancelPassengerPassConfirmed() throws AircraftException, PassengerException {
-		//change the state of passenger.
+		//change the state of passenger
 		tempPassenger.confirmSeat(10, 13);
 		tempFlight.cancelBooking(tempPassenger, 20);	
 	}

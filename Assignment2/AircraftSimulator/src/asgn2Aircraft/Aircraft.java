@@ -112,6 +112,25 @@ public abstract class Aircraft {
 			this.status += Log.setPassengerMsg(p,"C","N");
 			
 			//Stuff here
+			switch(getPassengerClassID(p)){
+			case 'F':
+				this.numFirst--;
+				break;
+			case 'J':
+				this.numBusiness--;
+				break;
+			case 'P':
+				this.numPremium--;
+				break;
+			default:
+				this.numEconomy--;
+				break;
+			}
+			
+			//I lack an index to keep track of for each passenger (probs planned snag)
+			//testing this (could go terribly wrong)
+			this.seats.remove(p);
+			
 		}
 		
 	}
@@ -136,7 +155,7 @@ public abstract class Aircraft {
 						this.status += Log.setPassengerMsg(p,"N/Q","C");
 						
 						//Update confirmed count for given class identifier
-						switch(p.getPassID().charAt(0)){
+						switch(getPassengerClassID(p)){
 						case 'F':
 							this.numFirst++;
 							break;
@@ -194,7 +213,8 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft full; false otherwise 
 	 */
 	public boolean flightFull() {
-		return seats.size() == this.capacity;
+		return (this.numEconomy+this.numPremium+this.numBusiness+this.numFirst) == 0;
+		//return seats.size() == this.capacity;
 	}
 	
 	/**
@@ -337,7 +357,7 @@ public abstract class Aircraft {
 	public boolean seatsAvailable(Passenger p) {
 		boolean available;
 		//Find the passenger's class identifier
-		switch(p.getPassID().charAt(0)){
+		switch(getPassengerClassID(p)){
 		case 'F':
 			available = this.numFirst < this.firstCapacity;
 			break;
@@ -419,5 +439,17 @@ public abstract class Aircraft {
 	private String noSeatsAvailableMsg(Passenger p) {
 		String msg = "";
 		return msg + p.noSeatsMsg(); 
+	}
+	
+	/**
+	 * Identifies passenger's classID
+	 */
+	private char getPassengerClassID(Passenger p){
+		/*
+		 * ClassID is always the first character
+		 * of the passenger's passID
+		 */
+		char classID = p.getPassID().charAt(0);
+		return classID;
 	}
 }
