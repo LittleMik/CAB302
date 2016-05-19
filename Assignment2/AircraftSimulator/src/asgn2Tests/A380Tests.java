@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import asgn2Aircraft.A380;
+import asgn2Aircraft.Aircraft;
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.Business;
 import asgn2Passengers.Economy;
@@ -19,6 +20,11 @@ public class A380Tests {
 	Business tempPassenger;
 	A380 UnchangedFlight;
 	
+	//Passenger Class Constants from A380
+	static final int FIRST = 14;
+	static final int BUSINESS = 64;
+	static final int PREMIUM = 35;
+	static final int ECONOMY = 371;
 	
 	//Set up an inital flight and an itial passenger
 	@Before 
@@ -201,25 +207,30 @@ public class A380Tests {
 	
 
 	
-	//getNumEconomy spent wrong lel
+	/*
+	 * I added constants for the class capacities from the A380 class,
+	 * it fixed the test for fullPlane()
+	 * The getNum<PassangerClass> was however definitely returning 0 due to the lack
+	 * of confirmed passengers
+	 */
 	private void fillThePlane() throws AircraftException, PassengerException{
-		int maxEcon = tempFlight.getNumEonomy();
+		/*int maxEcon = tempFlight.getNumEonomy();
 		int maxBus = tempFlight.getNumBusiness();
 		int maxPrem = tempFlight.getNumPremium();
-		int maxFirst = tempFlight.getNumFirst();
+		int maxFirst = tempFlight.getNumFirst();*/
 		Economy tempEcon = new Economy(1,20);
 		Premium tempPrem = new Premium(1,20);
 		First tempFirst = new First(1,20);
-		for(int i = 0; i< maxBus ; i++){
+		for(int i = 0; i< BUSINESS ; i++){
 			tempFlight.confirmBooking(tempPassenger, 11);
 		}
-		for(int i = 0; i< maxEcon ; i++){
+		for(int i = 0; i< ECONOMY ; i++){
 			tempFlight.confirmBooking(tempEcon, 11);
 		}
-		for(int i = 0; i< maxPrem ; i++){
+		for(int i = 0; i< PREMIUM ; i++){
 			tempFlight.confirmBooking(tempPrem, 11);
 		}
-		for(int i = 0; i< maxFirst ; i++){
+		for(int i = 0; i< FIRST ; i++){
 			tempFlight.confirmBooking(tempFirst, 11);
 		}
 	}
