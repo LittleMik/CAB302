@@ -8,7 +8,9 @@ package asgn2Aircraft;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import asgn2Passengers.Business;
 import asgn2Passengers.Economy;
@@ -52,6 +54,9 @@ public abstract class Aircraft {
 	protected int departureTime; 
 	protected String status;
 	protected List<Passenger> seats;
+	
+	//hash map solution
+	private Map<String, Integer> passengerSeatIndexes;
 
 	/**
 	 * Constructor sets flight info and the basic size parameters. 
@@ -86,6 +91,7 @@ public abstract class Aircraft {
 			
 			//Initialize seats list as an arraylist
 			this.seats = new ArrayList();
+			this.passengerSeatIndexes = new HashMap<String, Integer>();
 		}
 	}
 	
@@ -108,10 +114,13 @@ public abstract class Aircraft {
 		}else if(!seats.contains(p)){
 			throw new AircraftException("Passenger not found on flight");				
 		}else{
+			//Change Passenger State
+			p.cancelSeat(cancellationTime);
+			
 			//Status Message
 			this.status += Log.setPassengerMsg(p,"C","N");
 			
-			//Stuff here
+			//Decrement confirmed count according to passenger's class
 			switch(getPassengerClassID(p)){
 			case 'F':
 				this.numFirst--;
@@ -127,9 +136,8 @@ public abstract class Aircraft {
 				break;
 			}
 			
-			//I lack an index to keep track of for each passenger (probs planned snag)
-			//testing this (could go terribly wrong)
-			this.seats.remove(p);
+			//temporary index retrieval via hashmap
+			this.seats.remove(this.passengerSeatIndexes.get(this.getPassengerIndex(p)));
 			
 		}
 		
@@ -151,6 +159,9 @@ public abstract class Aircraft {
 			if(this.departureTime > confirmationTime && confirmationTime > 0){
 				if(this.departureTime > 0){
 					if(this.seatsAvailable(p)){
+						//Change Passenger State
+						p.confirmSeat(confirmationTime, this.departureTime);
+						
 						//Status Message
 						this.status += Log.setPassengerMsg(p,"N/Q","C");
 						
@@ -170,6 +181,7 @@ public abstract class Aircraft {
 							break;
 						}
 						//Add to seats list
+						passengerSeatIndexes.put(getPassengerIndex(p), this.seats.size());
 						this.seats.add(p);
 					}else{
 						throw new AircraftException("No seats available in fare class");
@@ -452,4 +464,19 @@ public abstract class Aircraft {
 		char classID = p.getPassID().charAt(0);
 		return classID;
 	}
+	
+	private String getPassengerIndex(Passenger p){
+		int i = p.getPassID().length() - 1;
+		String temp = "", indexString = "";
+		while(Character.isDigit(p.getPassID().charAt(i))){
+			indexString += p.getPassID().charAt(i);
+			i--;
+		}
+		for(int j = indexString.length()-1; j >= 0; j--){
+			temp += indexString.charAt(j);
+		}
+		return temp;
+	}
+	
+	
 }
