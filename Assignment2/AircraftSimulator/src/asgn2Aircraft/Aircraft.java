@@ -56,7 +56,7 @@ public abstract class Aircraft {
 	protected List<Passenger> seats;
 	
 	//hash map solution
-	private Map<String, Integer> passengerSeatIndexes;
+	//private Map<String, Integer> passengerSeatIndexes;
 
 	/**
 	 * Constructor sets flight info and the basic size parameters. 
@@ -90,8 +90,8 @@ public abstract class Aircraft {
 			this.status = "";
 			
 			//Initialize seats list as an arraylist
-			this.seats = new ArrayList();
-			this.passengerSeatIndexes = new HashMap<String, Integer>();
+			this.seats = new ArrayList<Passenger>();
+			//this.passengerSeatIndexes = new HashMap<String, Integer>();
 		}
 	}
 	
@@ -108,10 +108,13 @@ public abstract class Aircraft {
 	public void cancelBooking(Passenger p,int cancellationTime) throws PassengerException, AircraftException {
 		//Exceptions
 		if(!p.isConfirmed()){
+			//Incorrect Passenger State Exception
 			throw new PassengerException("Invalid passenger state");
 		}else if(this.departureTime < cancellationTime || cancellationTime < 0){
+			//Invalid Cancellation Time
 			throw new PassengerException("Invalid cancellation time");		
 		}else if(!seats.contains(p)){
+			//Passenger not found in aircraft seating
 			throw new AircraftException("Passenger not found on flight");				
 		}else{
 			//Change Passenger State
@@ -137,7 +140,9 @@ public abstract class Aircraft {
 			}
 			
 			//temporary index retrieval via hashmap
-			this.seats.remove(this.passengerSeatIndexes.get(this.getPassengerIndex(p)));
+			
+			//this.seats.remove(this.passengerSeatIndexes.get(this.getPassengerIndex(p)));
+			this.seats.remove(p);
 			
 		}
 		
@@ -155,9 +160,14 @@ public abstract class Aircraft {
 	 */
 	public void confirmBooking(Passenger p,int confirmationTime) throws AircraftException, PassengerException { 
 		//Exceptions testing
+		
+		//Check Correct Passenger State (New or Queued)
 		if(p.isNew() || p.isQueued()){
+			//Check ConfirmationTime is valid
 			if(this.departureTime > confirmationTime && confirmationTime > 0){
+				//Check DepartureTime is valid
 				if(this.departureTime > 0){
+					//Check Seats Available on Aircraft
 					if(this.seatsAvailable(p)){
 						//Change Passenger State
 						p.confirmSeat(confirmationTime, this.departureTime);
@@ -180,8 +190,9 @@ public abstract class Aircraft {
 							this.numEconomy++;
 							break;
 						}
+						
 						//Add to seats list
-						passengerSeatIndexes.put(getPassengerIndex(p), this.seats.size());
+						//passengerSeatIndexes.put(getPassengerIndex(p), this.seats.size());
 						this.seats.add(p);
 					}else{
 						throw new AircraftException("No seats available in fare class");
@@ -216,7 +227,8 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft empty; false otherwise 
 	 */
 	public boolean flightEmpty() {
-		return seats.isEmpty();
+		return this.getNumPassengers() == 0;
+		//return seats.isEmpty();
 	}
 	
 	/**
@@ -225,7 +237,7 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if aircraft full; false otherwise 
 	 */
 	public boolean flightFull() {
-		return (this.numEconomy+this.numPremium+this.numBusiness+this.numFirst) == 0;
+		return this.getNumPassengers() == this.capacity;
 		//return seats.size() == this.capacity;
 	}
 	
@@ -239,7 +251,9 @@ public abstract class Aircraft {
 	 * See {@link asgn2Passengers.Passenger#flyPassenger(int)}. 
 	 */
 	public void flyPassengers(int departureTime) throws PassengerException { 
+		//Iterate through seats array, 'flying' all confirmed passengers
 		for(Passenger p: this.seats){
+			//Check Correct Passenger State (Confirmed)
 			if(p.isConfirmed()){
 				p.flyPassenger(departureTime);
 			}else{
@@ -255,7 +269,7 @@ public abstract class Aircraft {
 	 * @return <code>Bookings</code> object containing the status.  
 	 */
 	public Bookings getBookings() {
-		int total = this.numEconomy+this.numPremium+this.numBusiness+this.numFirst;
+		int total = this.getNumPassengers();
 		int available = this.capacity - total;
 		Bookings b = new Bookings(this.numFirst, this.numBusiness, this.numPremium, this.numEconomy, total, available);
 		return b;
@@ -314,7 +328,7 @@ public abstract class Aircraft {
 	 * @return <code>List<Passenger></code> object containing the passengers.  
 	 */
 	public List<Passenger> getPassengers() {
-		List<Passenger> passengers = new ArrayList();
+		List<Passenger> passengers = new ArrayList<Passenger>();
 		passengers = this.seats;
 		return passengers;
 	}
@@ -342,7 +356,7 @@ public abstract class Aircraft {
 	 * @return <code>boolean</code> true if isConfirmed(p); false otherwise 
 	 */
 	public boolean hasPassenger(Passenger p) {
-		return this.seats.contains(p) && p.isConfirmed();
+		return (this.seats.contains(p) && p.isConfirmed());
 	}
 	
 
@@ -410,18 +424,38 @@ public abstract class Aircraft {
 	 * by upgrades to First), and then finally, we do the same for Economy, upgrading 
 	 * where possible to Premium.  
 	 * 
-	 * @throws PassengerException if <code>Passenger</code> is in incorrect state 
 	 * See {@link asgn2Passengers.Passenger#upgrade()}
 	 */
-	public void upgradeBookings() throws PassengerException { 
+	public void upgradeBookings() { 
+		/*
+		 * Still thinking on a way to avoid multiple while loops
+		 * Possibly getting arrays of each passenger class and doing the upgrade in one big while loop
+		 * based on individual class capacities
+		 */
 		while(this.numFirst < this.firstCapacity && this.numBusiness > 0){
 			for(Passenger p: this.seats){
-				if(p.isConfirmed()){
-					if(p.getPassID().charAt(0) == 'J'){
-						p.upgrade();
-					}
-				}else{
-					throw new PassengerException("Invalid passenger state");
+				//check passenger is eligible for first class upgrade
+				if(getPassengerClassID(p) == 'J'){
+					//upgrade passenger
+					p.upgrade();
+				}
+			}
+		}
+		while(this.numBusiness < this.businessCapacity && this.numPremium > 0){
+			for(Passenger p: this.seats){
+				//check passenger is eligible for business class upgrade
+				if(getPassengerClassID(p) == 'P'){
+					//upgrade passenger
+					p.upgrade();
+				}
+			}
+		}
+		while(this.numPremium < this.premiumCapacity && this.numEconomy > 0){
+			for(Passenger p: this.seats){
+				//check passenger is eligible for premium class upgrade
+				if(getPassengerClassID(p) == 'Y'){
+					//upgrade passenger
+					p.upgrade();
 				}
 			}
 		}
@@ -455,6 +489,9 @@ public abstract class Aircraft {
 	
 	/**
 	 * Identifies passenger's classID
+	 *
+	 * @param p
+	 * @return <code>char</code> containing the class identifier character (Y, P, J, or F)
 	 */
 	private char getPassengerClassID(Passenger p){
 		/*
@@ -465,6 +502,12 @@ public abstract class Aircraft {
 		return classID;
 	}
 	
+	/**
+	 * Returns the passenger's index number obtained from
+	 * creation without the class identifier(s)
+	 * @param p
+	 * @return <code>String</code> containing passenger index
+	 */
 	private String getPassengerIndex(Passenger p){
 		int i = p.getPassID().length() - 1;
 		String temp = "", indexString = "";
@@ -477,6 +520,4 @@ public abstract class Aircraft {
 		}
 		return temp;
 	}
-	
-	
 }
