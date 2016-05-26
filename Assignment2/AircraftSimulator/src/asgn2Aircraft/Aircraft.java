@@ -164,7 +164,7 @@ public abstract class Aircraft {
 		//Check Correct Passenger State (New or Queued)
 		if(p.isNew() || p.isQueued()){
 			//Check ConfirmationTime is valid
-			if(this.departureTime > confirmationTime && confirmationTime > 0){
+			if(this.departureTime > confirmationTime && confirmationTime >= 0){
 				//Check DepartureTime is valid
 				if(this.departureTime > 0){
 					//Check Seats Available on Aircraft
@@ -438,6 +438,8 @@ public abstract class Aircraft {
 				if(getPassengerClassID(p) == 'J'){
 					//upgrade passenger
 					p.upgrade();
+					this.numFirst++;
+					this.numBusiness--;
 				}
 			}
 		}
@@ -447,6 +449,8 @@ public abstract class Aircraft {
 				if(getPassengerClassID(p) == 'P'){
 					//upgrade passenger
 					p.upgrade();
+					this.numBusiness++;
+					this.numPremium--;
 				}
 			}
 		}
@@ -456,6 +460,8 @@ public abstract class Aircraft {
 				if(getPassengerClassID(p) == 'Y'){
 					//upgrade passenger
 					p.upgrade();
+					this.numPremium++;
+					this.numEconomy--;
 				}
 			}
 		}
