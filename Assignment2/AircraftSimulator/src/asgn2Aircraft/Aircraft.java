@@ -164,7 +164,7 @@ public abstract class Aircraft {
 		//Check Correct Passenger State (New or Queued)
 		if(p.isNew() || p.isQueued()){
 			//Check ConfirmationTime is valid
-			if(this.departureTime > confirmationTime && confirmationTime >= 0){
+			if(this.departureTime >= confirmationTime && confirmationTime >= 0){
 				//Check DepartureTime is valid
 				if(this.departureTime > 0){
 					//Check Seats Available on Aircraft
@@ -328,9 +328,7 @@ public abstract class Aircraft {
 	 * @return <code>List<Passenger></code> object containing the passengers.  
 	 */
 	public List<Passenger> getPassengers() {
-		List<Passenger> passengers = new ArrayList<Passenger>();
-		passengers = this.seats;
-		return passengers;
+		return new ArrayList<Passenger> (seats);
 	}
 	
 	/**
