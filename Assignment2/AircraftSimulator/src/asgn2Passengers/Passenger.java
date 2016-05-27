@@ -116,12 +116,17 @@ public abstract class Passenger {
 	 *         isFlown(this) OR (cancellationTime < 0) OR (departureTime < cancellationTime)
 	 */
 	public void cancelSeat(int cancellationTime) throws PassengerException {
-			if((this.isConfirmed())&&(this.departureTime > cancellationTime)){
+			if((this.isConfirmed())&&(this.departureTime >= cancellationTime)&&(cancellationTime >= 0)){
 				this.confirmed = false;
 				this.newState = true;
 				this.bookingTime = cancellationTime;
 			}else{
-				throw new PassengerException("Invalid passenger state");
+				if(!this.isConfirmed()){
+					throw new PassengerException("Invalid passenger state");
+				}else{
+					throw new PassengerException("Invalid time");
+					
+				}
 			}
 	}
 
@@ -143,7 +148,7 @@ public abstract class Passenger {
 	 */
 	public void confirmSeat(int confirmationTime, int departureTime) throws PassengerException {
 		if((this.isNew()) || (this.isQueued())){
-			if((this.departureTime > confirmationTime) && (confirmationTime > 0)){
+			if((departureTime >= confirmationTime) && (confirmationTime >= 0)){
 				if(this.isNew()){
 					this.newState = false;
 				}else{
@@ -152,7 +157,7 @@ public abstract class Passenger {
 				}				
 			this.confirmed = true;
 			this.confirmationTime = confirmationTime;
-			this.bookingTime = departureTime;
+			this.departureTime = departureTime;
 			}else{
 				throw new PassengerException("Invalid confirmation time");
 			}
@@ -313,7 +318,7 @@ public abstract class Passenger {
 	 */
 	public void queuePassenger(int queueTime, int departureTime) throws PassengerException {
 		if(this.isNew()){
-			if((queueTime > 0) && (departureTime > queueTime)){
+			if((queueTime >= 0) && (departureTime >= queueTime)){
 				this.inQueue = true;
 				this.newState = false;
 				this.enterQueueTime = queueTime;
@@ -342,7 +347,7 @@ public abstract class Passenger {
 	 */
 	public void refusePassenger(int refusalTime) throws PassengerException {
 		if((this.isNew()) || (this.isQueued())){
-			if((refusalTime > 0) && (refusalTime > bookingTime)){
+			if((refusalTime >= 0) && (refusalTime >= bookingTime)){
 				if(this.isNew()){
 					this.newState = false;
 				}else{
@@ -425,18 +430,18 @@ public abstract class Passenger {
 	 * @param <code>Passenger</code> state to transfer
 	 */
 	protected void copyPassengerState(Passenger p) {
-		String state;
-		if(p.isNew()){
-			state = "new";
-		}else if(p.isConfirmed()){
-			state = "confirmed";
-		}else if(p.isQueued()){
-			state = "queued";
-		}else if(p.isFlown()){
-			state = "flown";
-		}else{
-			state = "refused";
-		}
+		this.departureTime = p.getDepartureTime();
+		this.bookingTime = p.getBookingTime();
+		this.newState = p.isNew();
+		this.confirmed = p.isConfirmed();
+		this.refused = p.isRefused();
+		this.flown = p.isFlown();
+		this.inQueue = p.isQueued();
+		this.confirmationTime = p.getConfirmationTime();
+		this.enterQueueTime = p.getEnterQueueTime();
+		this.exitQueueTime = p.getExitQueueTime();
+		this.passID = p.getPassID();
+
 	}
 	
 	//Various private helper methods to check arguments and throw exceptions

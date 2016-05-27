@@ -42,7 +42,9 @@ public class Business extends Passenger {
 
 	@Override
 	public Passenger upgrade() {
-		this.passID = "F:" + this.passID;
-		return this;
+		First newPass = new First();
+		newPass.copyPassengerState(this);
+		newPass.passID = "F:" + newPass.getPassID();
+		return newPass;
 	}
 }

@@ -32,7 +32,9 @@ public class Economy extends Passenger {
 
 	@Override
 	public Passenger upgrade() {
-		this.passID = "P:" + this.passID;
-		return this;
+		Premium newPass = new Premium();
+		newPass.copyPassengerState(this);
+		newPass.passID = "P:" + this.passID;
+		return newPass;
 	}
 }
