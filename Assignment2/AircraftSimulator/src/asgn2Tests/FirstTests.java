@@ -39,6 +39,8 @@ public class FirstTests {
 	@Test
 	public void testFirstIntInt() throws PassengerException {
 		testFirstPassenger = new First(bookingTime, departureTime);
+		//Verify New State
+		assertTrue(testFirstPassenger.isNew());
 	}
 	
 	/**--------- FIRST: OTHER TESTS ---------**/	
@@ -644,17 +646,100 @@ public class FirstTests {
 	/**--------- PASSENGER: OTHER TESTS ---------**/
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#wasConfirmed()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testWasConfirmed() {
-		fail("Not yet implemented");
+	public void testWasConfirmedTrue() throws PassengerException {
+		//Setup Test Conditions
+		p = new First(bookingTime, departureTime);
+		p.confirmSeat(confirmationTime, departureTime);
+		//Verify Confirmed State
+		assertTrue(p.isConfirmed());
+		
+		p.cancelSeat(cancellationTime);
+		//Verify New State
+		assertTrue(p.isNew());
+		
+		//Verify passenger wasConfirmed returns true
+		assertTrue(p.wasConfirmed());
 	}
-
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#wasConfirmed()}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testWasConfirmedFalse() throws PassengerException {
+		//Setup Test Conditions
+		p = new First(bookingTime, departureTime);
+		//Verify New State
+		assertTrue(p.isNew());
+		
+		//Verify passenger wasConfirmed returns false
+		assertFalse(p.wasConfirmed());
+	}
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#wasConfirmed()}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testWasConfirmedAtConfirmedState() throws PassengerException {
+		//Setup Test Conditions
+		p = new First(bookingTime, departureTime);
+		p.confirmSeat(confirmationTime, departureTime);
+		//Verify Confirmed State
+		assertTrue(p.isConfirmed());
+		
+		//Verify passenger wasConfirmed returns true
+		assertTrue(p.wasConfirmed());
+	}
+	
 	/**
 	 * Test method for {@link asgn2Passengers.Passenger#wasQueued()}.
+	 * @throws PassengerException 
 	 */
 	@Test
-	public void testWasQueued() {
-		fail("Not yet implemented");
+	public void testWasQueuedTrue() throws PassengerException {
+		//Setup Test Conditions
+		p = new First(bookingTime, departureTime);
+		p.queuePassenger(queueTime, departureTime);
+		//Verify Queued State
+		assertTrue(p.isQueued());
+		
+		p.confirmSeat(confirmationTime, departureTime);
+		//Verify Confirmed State
+		assertTrue(p.isConfirmed());
+		
+		//Verify passenger wasQueued returns true
+		assertTrue(p.wasQueued());
+	}
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#wasQueued()}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testWasQueuedTrueAtQueued() throws PassengerException {
+		//Setup Test Conditions
+		p = new First(bookingTime, departureTime);
+		p.queuePassenger(queueTime, departureTime);
+		//Verify Queued State
+		assertTrue(p.isQueued());
+		
+		//Verify passenger wasQueued returns true
+		assertTrue(p.wasQueued());
+	}
+	/**
+	 * Test method for {@link asgn2Passengers.Passenger#wasQueued()}.
+	 * @throws PassengerException 
+	 */
+	@Test
+	public void testWasQueuedFalse() throws PassengerException {
+		//Setup Test Conditions
+		p = new First(bookingTime, departureTime);
+		p.confirmSeat(confirmationTime, departureTime);
+		//Verify Confirmed State
+		assertTrue(p.isConfirmed());
+		
+		//Verify passenger wasQueued returns false
+		assertFalse(p.wasQueued());
 	}
 }
