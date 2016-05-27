@@ -589,14 +589,12 @@ public class A380Tests {
 		int count = 0;
 		tempFlight.confirmBooking(tempPassenger, 11);
 		tempFlight.confirmBooking(tempEco, 11);
-		Passenger c = null;
-		for(Passenger p: tempFlight.getPassengers()){
-			c = p.upgrade();
-			p = c;
-			count++;
-		}
-		//tempFlight.upgradeBookings();
-		assertEquals(tempFlight.getPassengers(),c);
+
+		tempFlight.upgradeBookings();
+		//for(Passenger p : tempFlight.getPassengers()){
+			//p = p.upgrade();
+			assertEquals(tempFlight.getPassengers(),tempFlight.getPassengers().size());
+		//}
 	}
 	
 	
