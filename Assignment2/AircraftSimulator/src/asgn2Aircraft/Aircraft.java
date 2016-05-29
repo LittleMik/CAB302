@@ -426,12 +426,33 @@ public abstract class Aircraft {
 	 */
 	public void upgradeBookings() { 
 		/*
-		 * Still thinking on a way to avoid multiple while loops
-		 * Possibly getting arrays of each passenger class and doing the upgrade in one big while loop
-		 * based on individual class capacities
+		 * Each passenger is only upgraded once
+		 * Seats index does not change for a given passenger
 		 */
 		List<Passenger> pass = this.seats;
-		
+		for(int i = 0; i < this.seats.size(); i++){
+			Passenger p = pass.get(i);
+			//Check availability in next class
+			if(this.seatsAvailable(p.upgrade())){
+				//Upgrade passenger
+				this.seats.remove(i);
+				p = p.upgrade();
+				this.seats.add(i, p);
+				//Update class totals				
+				if(p instanceof First){
+					this.numFirst++;
+					this.numBusiness--;
+				}else if(p instanceof Business){
+					this.numBusiness++;
+					this.numPremium--;
+				}else if(p instanceof Premium){
+					this.numPremium++;
+					this.numEconomy--;
+				}
+			}
+		}
+		/*
+		if(this.sea)
 		for(int i = 0; i < this.seats.size(); i++){
 				Passenger p = pass.get(i);
 				//check passenger is eligible for first class upgrade
@@ -473,7 +494,7 @@ public abstract class Aircraft {
 					this.numEconomy--;
 				}
 			}
-		}
+		}*/
 	}
 
 	/**
@@ -515,24 +536,5 @@ public abstract class Aircraft {
 		 */
 		char classID = p.getPassID().charAt(0);
 		return classID;
-	}
-	
-	/**
-	 * Returns the passenger's index number obtained from
-	 * creation without the class identifier(s)
-	 * @param p
-	 * @return <code>String</code> containing passenger index
-	 */
-	private String getPassengerIndex(Passenger p){
-		int i = p.getPassID().length() - 1;
-		String temp = "", indexString = "";
-		while(Character.isDigit(p.getPassID().charAt(i))){
-			indexString += p.getPassID().charAt(i);
-			i--;
-		}
-		for(int j = indexString.length()-1; j >= 0; j--){
-			temp += indexString.charAt(j);
-		}
-		return temp;
 	}
 }
