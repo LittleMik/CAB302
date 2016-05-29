@@ -7,6 +7,8 @@
 package asgn2Simulators;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
@@ -49,15 +51,7 @@ public class SimulationRunner {
 			e1.printStackTrace();
 			System.exit(-1);
 		}
-	
-		//Run the simulation 
-		SimulationRunner sr = new SimulationRunner(s,l);
-		try {
-			sr.runSimulation();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.exit(-1);
-		} 
+
 	}
 	/**
 	 * Helper to process args for Simulator  
@@ -116,12 +110,13 @@ public class SimulationRunner {
 	 * @throws PassengerException See methods from {@link asgn2Simulators.Simulator} 
 	 * @throws SimulationException See methods from {@link asgn2Simulators.Simulator} 
 	 * @throws IOException on logging failures See methods from {@link asgn2Simulators.Log} 
-
 	 */
-	public void runSimulation() throws AircraftException, PassengerException, SimulationException, IOException {
+	public void runSimulation(GUISimulator gs) throws AircraftException, PassengerException, SimulationException, IOException {
+		String outPutString = "";
 		this.sim.createSchedule();
 		this.log.initialEntry(this.sim);
-		
+		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		outPutString = timeLog + ": Start of Simulation\n"+sim.toString() + "\n"+sim.getFlights(Constants.FIRST_FLIGHT).initialState();
 		//Main simulation loop 
 		for (int time=0; time<=Constants.DURATION; time++) {
 			this.sim.resetStatus(time); 
@@ -134,15 +129,26 @@ public class SimulationRunner {
 				this.sim.flyPassengers(time);
 				this.sim.updateTotalCounts(time); 
 				this.log.logFlightEntries(time, sim);
+				Flights flights = sim.getFlights(time); 
+	
+				//outPutString = outPutString + flights.getStatus(time)+"\r\n";
 			} else {
 				this.sim.processQueue(time);
 			}
 			//Log progress 
 			this.log.logQREntries(time, sim);
+			//outPutString = outPutString + sim.getStatus(time);
 			this.log.logEntry(time,this.sim);
+			boolean flying = (time >= Constants.FIRST_FLIGHT);
+			outPutString = outPutString + sim.getSummary(time, flying);
 		}
 		this.sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
 		this.log.logQREntries(Constants.DURATION, sim);
 		this.log.finalise(this.sim);
+		String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+		outPutString = outPutString + "\n" + time + ": End of Simulation\n";
+		outPutString = outPutString + sim.finalState();		
+		gs.addToGUI(outPutString);
+		
 	}
 }

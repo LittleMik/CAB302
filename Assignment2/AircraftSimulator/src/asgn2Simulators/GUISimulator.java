@@ -19,15 +19,22 @@ import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+
+import asgn2Aircraft.AircraftException;
+import asgn2Passengers.PassengerException;
 
 /**
  * @author hogan
@@ -63,7 +70,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private JLabel txtQsize;
 	private JLabel txtCancellation;
 	
-	private JTextField txtOutPut;
+	private JTextArea txtOutPut;
 	private JLabel blankSpace;
 	private JLabel blankSpace2;
 	private JLabel blankSpace3;
@@ -125,10 +132,14 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    pnlThree.setPreferredSize(new Dimension(300,250));
 	    pnlFive.setPreferredSize(new Dimension(300,250));
 		    
-	    txtOutPut = new JTextField();
+	    txtOutPut = new JTextArea();
+	    
 	    txtInputFirst = new JTextField(10);
 	    txtInputBusiness = new JTextField(10);
-	    txtOutPut.setPreferredSize(new Dimension(700,200));
+	    //txtOutPut.setPreferredSize(new Dimension(700,50));
+	    txtOutPut.setLineWrap(true);
+	    txtOutPut.setEditable(false);
+	    txtOutPut.setVisible(true);
 	    
 	    txtOperation = new JLabel();
 	    txtFareClasses = new JLabel();
@@ -223,10 +234,13 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    txtCancellation.setFont(font1);
 	    txtCancellation.setText("Cancellation:");
 	    
-	    pnlOne.add(txtOutPut);
+	    //pnlOne.add(txtOutPut);
+	    JScrollPane scroll = new JScrollPane(txtOutPut);
+	    scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
+	    scroll.setPreferredSize(new Dimension(700, 200));
+	    pnlOne.add(scroll);
 	    pnlTwo.add(txtOperation);
-
-		      
+	    
 
 	    txtInputFirst = new JTextField(10);
 	    txtInputBusiness = new JTextField(10);
@@ -305,7 +319,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    this.getContentPane().add(pnlTwo,BorderLayout.EAST);
 	    this.getContentPane().add(pnlThree,BorderLayout.WEST);
 	    this.getContentPane().add(pnlFive,BorderLayout.CENTER);
-	    
 	    repaint(); 
 	    this.setVisible(true);
 	}
@@ -367,9 +380,38 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void actionPerformed(ActionEvent c) {
+		Object src=c.getSource(); 
+		Log l = null; 
+		SimulationRunner sr = null;
+		Simulator s = null;
+		//Consider the alternatives - not all active at once. 
+		if (src== btnRun) {
+			 try {
+				l = new Log();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
+			try { 
+				
+				 s = new Simulator(Integer.parseInt(txtInputRng.getText()),Integer.parseInt(txtInputQsize.getText()),Double.parseDouble(txtInputMean.getText()),0.33*Double.parseDouble(txtInputMean.getText()),Double.parseDouble(txtInputFirst.getText()),Double.parseDouble(txtInputBusiness.getText()),Double.parseDouble(txtInputPremium.getText()),Double.parseDouble(txtInputEconomy.getText()),Double.parseDouble(txtInputCancellation.getText()));
+			} catch (NumberFormatException | SimulationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 SimulationRunner runSIm = new SimulationRunner(s, l);
+			 try {
+				runSIm.runSimulation(this);
+			} catch (AircraftException | PassengerException | SimulationException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void addToGUI(String outputString){
+		txtOutPut.setText(outputString);
 	}
 
 }
