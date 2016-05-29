@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -32,6 +33,15 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RefineryUtilities;
 
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
@@ -88,6 +98,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private JTextField txtInputMean;
 	private JTextField txtInputQsize;
 	private JTextField txtInputCancellation;
+	
+	private Chart chart1;
 	
 	/**
 	 * @param arg0
@@ -252,6 +264,17 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    txtInputQsize = new JTextField(10);
 	    txtInputCancellation = new JTextField(10);
 	    
+	    //Default Inputs
+	    txtInputFirst.setText("" + Constants.DEFAULT_FIRST_PROB);
+	    txtInputBusiness.setText("" + Constants.DEFAULT_BUSINESS_PROB);
+	    txtInputEconomy.setText("" + Constants.DEFAULT_ECONOMY_PROB);
+	    txtInputPremium.setText("" + Constants.DEFAULT_PREMIUM_PROB);
+	    
+	    txtInputRng.setText("" + Constants.DEFAULT_SEED);
+	    txtInputMean.setText("" + Constants.DEFAULT_DAILY_BOOKING_MEAN);
+	    txtInputQsize.setText("" + Constants.DEFAULT_MAX_QUEUE_SIZE);
+	    txtInputCancellation.setText("" + Constants.DEFAULT_CANCELLATION_PROB);
+	    
 	    layoutButtonPanel();
 	    
 	    c.gridx = 0;
@@ -407,11 +430,18 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else if(src == btnShow){
+			chart1.pack();
+            RefineryUtilities.centerFrameOnScreen(chart1);
+            chart1.setVisible(true);
 		}
 	}
 	
 	public void addToGUI(String outputString){
 		txtOutPut.setText(outputString);
 	}
-
+	
+	public void addChart1(XYSeriesCollection dataset){
+		chart1 = new Chart("Chart1: Progress", dataset);
+	}
 }

@@ -9,8 +9,19 @@ package asgn2Simulators;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Random;
+
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 import asgn2Aircraft.AircraftException;
+import asgn2Aircraft.Bookings;
 import asgn2Passengers.PassengerException;
 
 /**
@@ -89,7 +100,7 @@ public class SimulationRunner {
 	
 	
 	private Simulator sim;
-	private Log log; 
+	private Log log;
 
 	/**
 	 * Constructor just does initialisation 
@@ -112,9 +123,14 @@ public class SimulationRunner {
 	 * @throws IOException on logging failures See methods from {@link asgn2Simulators.Log} 
 	 */
 	public void runSimulation(GUISimulator gs) throws AircraftException, PassengerException, SimulationException, IOException {
-		String outPutString = "";
+		String outPutString = "";	
+		
 		this.sim.createSchedule();
 		this.log.initialEntry(this.sim);
+		
+		//Chart Dataset
+		XYSeriesCollection dataset = createDataset();
+		
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		outPutString = timeLog + ": Start of Simulation\n"+sim.toString() + "\n"+sim.getFlights(Constants.FIRST_FLIGHT).initialState();
 		//Main simulation loop 
@@ -132,6 +148,10 @@ public class SimulationRunner {
 				Flights flights = sim.getFlights(time); 
 	
 				//outPutString = outPutString + flights.getStatus(time)+"\r\n";
+				
+				//Update Chart
+				Bookings b = this.sim.getFlightStatus(time);
+				updateDataset(dataset, b, time);
 			} else {
 				this.sim.processQueue(time);
 			}
@@ -150,5 +170,49 @@ public class SimulationRunner {
 		outPutString = outPutString + sim.finalState();		
 		gs.addToGUI(outPutString);
 		
+		//Add Chart to GUI
+		gs.addChart1(dataset);
 	}
+	
+	/**
+	 * Create an XYSeriesCollection with all series setup
+	 * @return XYSeriesCollection dataset
+	 */
+	private XYSeriesCollection createDataset(){
+		XYSeriesCollection dataset = new XYSeriesCollection();
+		XYSeries firstTotal = new XYSeries("First");
+		XYSeries businessTotal = new XYSeries("Business");
+		XYSeries premiumTotal = new XYSeries("Premium");
+		XYSeries economyTotal = new XYSeries("Economy");
+		XYSeries passengerTotal = new XYSeries("Total");
+		XYSeries seatsAvailable = new XYSeries("Seats Available");
+		
+		dataset.addSeries(firstTotal);
+		dataset.addSeries(businessTotal);
+		dataset.addSeries(premiumTotal);
+		dataset.addSeries(economyTotal);
+		dataset.addSeries(passengerTotal);
+		dataset.addSeries(seatsAvailable);
+		return dataset;
+	}
+	
+	/**
+     * Update Dataset's series with new plot points
+	 */
+	private void updateDataset(XYSeriesCollection dataset, Bookings b, int time) {
+		XYSeries firstTotal = dataset.getSeries(0);
+		XYSeries businessTotal = dataset.getSeries(1);
+		XYSeries premiumTotal = dataset.getSeries(2);
+		XYSeries economyTotal = dataset.getSeries(3);
+		XYSeries passengerTotal = dataset.getSeries(4);
+		XYSeries seatsAvailable = dataset.getSeries(5);
+		
+	    firstTotal.add(time, b.getNumFirst());
+	    businessTotal.add(time, b.getNumBusiness());
+	    premiumTotal.add(time, b.getNumPremium());
+	    economyTotal.add(time, b.getNumEconomy());
+	    passengerTotal.add(time, b.getTotal());
+	    seatsAvailable.add(time, b.getAvailable());
+	}
+	
 }
