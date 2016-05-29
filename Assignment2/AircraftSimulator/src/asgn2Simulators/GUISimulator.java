@@ -26,6 +26,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -344,6 +345,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    this.getContentPane().add(pnlFive,BorderLayout.CENTER);
 	    repaint(); 
 	    this.setVisible(true);
+	    resetBorders();
 	}
 	
 	private void addToPanel(JPanel jp,Component c, GridBagConstraints constraints, int x, int y, int w, int h) {  
@@ -380,6 +382,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    
 	    addToPanel(pnlTwo, btnRun , buttons,0,0,2,1);
 	    addToPanel(pnlTwo, btnShow , buttons,0,2,2,1);
+	    btnShow.setEnabled(false);
 	   
 	   
 	}
@@ -409,26 +412,30 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		SimulationRunner sr = null;
 		Simulator s = null;
 		//Consider the alternatives - not all active at once. 
+		resetBorders();
 		if (src== btnRun) {
-			 try {
-				l = new Log();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} 
-			try { 
-				
-				 s = new Simulator(Integer.parseInt(txtInputRng.getText()),Integer.parseInt(txtInputQsize.getText()),Double.parseDouble(txtInputMean.getText()),0.33*Double.parseDouble(txtInputMean.getText()),Double.parseDouble(txtInputFirst.getText()),Double.parseDouble(txtInputBusiness.getText()),Double.parseDouble(txtInputPremium.getText()),Double.parseDouble(txtInputEconomy.getText()),Double.parseDouble(txtInputCancellation.getText()));
-			} catch (NumberFormatException | SimulationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			 SimulationRunner runSIm = new SimulationRunner(s, l);
-			 try {
-				runSIm.runSimulation(this);
-			} catch (AircraftException | PassengerException | SimulationException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(checkSimulation()){
+				 try {
+					l = new Log();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+				try { 
+					
+					 s = new Simulator(Integer.parseInt(txtInputRng.getText()),Integer.parseInt(txtInputQsize.getText()),Double.parseDouble(txtInputMean.getText()),0.33*Double.parseDouble(txtInputMean.getText()),Double.parseDouble(txtInputFirst.getText()),Double.parseDouble(txtInputBusiness.getText()),Double.parseDouble(txtInputPremium.getText()),Double.parseDouble(txtInputEconomy.getText()),Double.parseDouble(txtInputCancellation.getText()));
+				} catch (NumberFormatException | SimulationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				 SimulationRunner runSIm = new SimulationRunner(s, l);
+				 try {
+					runSIm.runSimulation(this);
+				} catch (AircraftException | PassengerException | SimulationException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				 btnShow.setEnabled(true);
 			}
 		}else if(src == btnShow){
 			chart1.pack();
@@ -443,5 +450,93 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	
 	public void addChart1(XYSeriesCollection dataset){
 		chart1 = new Chart("Chart1: Progress", dataset);
+	}
+	
+	private boolean checkSimulation(){
+		 try{
+			 Integer.parseInt(txtInputRng.getText());
+		 }catch (NumberFormatException | NullPointerException e) {
+			 JOptionPane.showMessageDialog(null,"Invalid rng seed input");
+			 txtInputRng.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+			e.printStackTrace();
+			return false;
+		}
+		 
+		 try{
+			 Integer.parseInt(txtInputQsize.getText());
+		 }catch (NumberFormatException | NullPointerException e) {
+			 JOptionPane.showMessageDialog(null,"Invalid queue size input");
+			 txtQsize.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+			e.printStackTrace();
+			return false;
+		}
+		 
+		 try{
+			 Double.parseDouble(txtInputMean.getText());
+		 }catch (NumberFormatException | NullPointerException e) {
+			 JOptionPane.showMessageDialog(null,"Invalid daily mean input");
+			 txtInputMean.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+			e.printStackTrace();
+			return false;
+		}
+		 
+		 try{
+			 Double.parseDouble(txtInputFirst.getText());
+		 }catch (NumberFormatException | NullPointerException e) {
+			 JOptionPane.showMessageDialog(null,"Invalid first input");
+			 txtInputFirst.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+			e.printStackTrace();
+			return false;
+		}
+		 
+		 try{
+			 Double.parseDouble(txtInputBusiness.getText());
+		 }catch (NumberFormatException | NullPointerException e) {
+			 JOptionPane.showMessageDialog(null,"Invalid business input");
+			 txtInputBusiness.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+			e.printStackTrace();
+			return false;
+		}
+		 
+		 try{
+			 Double.parseDouble(txtInputPremium.getText());
+		 }catch (NumberFormatException | NullPointerException e) {
+			 JOptionPane.showMessageDialog(null,"Invalid premium input");
+			 txtPremium.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+			e.printStackTrace();
+			return false;
+		}
+		 
+		 try{
+			 Double.parseDouble(txtInputEconomy.getText());
+		 }catch (NumberFormatException | NullPointerException e) {
+			 JOptionPane.showMessageDialog(null,"Invalid economy input");
+			 txtInputEconomy.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+			e.printStackTrace();
+			return false;
+		}
+		 
+		 try{
+			 Double.parseDouble(txtInputCancellation.getText());
+		 }catch (NumberFormatException | NullPointerException e) {
+			 JOptionPane.showMessageDialog(null,"Invalid cancellation input");
+			 txtInputCancellation.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+			e.printStackTrace();
+			return false;
+		}
+
+		 return true;		
+	}
+	
+	private void resetBorders(){
+		Border border = BorderFactory.createLineBorder(Color.decode("#190707"));
+		txtInputRng.setBorder(border);
+		txtInputQsize.setBorder(border);
+		txtInputMean.setBorder(border);
+		txtInputFirst.setBorder(border);
+		txtInputBusiness.setBorder(border);
+		txtInputPremium.setBorder(border);
+		txtInputEconomy.setBorder(border);
+		txtInputCancellation.setBorder(border);
 	}
 }

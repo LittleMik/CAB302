@@ -696,18 +696,7 @@ public class A380Tests {
 		assertTrue(testFlight.getPassengers().get(1) instanceof Business);
 	}
 	
-	@Test
-	public void upgradeBookingsBusinessWhenFirstIsFullManyPassengers() throws AircraftException, PassengerException{
-		A380 testFlight = new A380(airCode,airDepartureTime, numberOne, numberOne+1, numberOne,numberOne);
-		Economy tempEcon = new Economy(passBookingTime,passDepartureTime);
-		Premium tempPrem = new Premium(passBookingTime,passDepartureTime);
-		First tempFirst = new First(passBookingTime,passDepartureTime);
-		testFlight.confirmBooking(tempEcon, confirmationTime);
-		testFlight.confirmBooking(tempPrem, confirmationTime);
-		testFlight.confirmBooking(tempPassenger, confirmationTime);
-		testFlight.upgradeBookings();
-		assertTrue(testFlight.seatsAvailable(tempFirst));
-	}
+	
 	
 	
 	private void fillThePlane() throws AircraftException, PassengerException{
