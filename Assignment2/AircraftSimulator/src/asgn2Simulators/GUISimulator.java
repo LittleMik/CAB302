@@ -40,6 +40,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.RefineryUtilities;
@@ -101,6 +102,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private JTextField txtInputCancellation;
 	
 	private Chart chart1;
+	private Chart chart2;
 	
 	/**
 	 * @param arg0
@@ -441,6 +443,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			chart1.pack();
             RefineryUtilities.centerFrameOnScreen(chart1);
             chart1.setVisible(true);
+            chart2.pack();
+            RefineryUtilities.centerFrameOnScreen(chart2);
+            chart2.setVisible(true);
 		}
 	}
 	
@@ -448,8 +453,12 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		txtOutPut.setText(outputString);
 	}
 	
-	public void addChart1(XYSeriesCollection dataset){
-		chart1 = new Chart("Chart1: Progress", dataset);
+	public void addChart(Dataset dataset, int chartNumber){
+		if(chartNumber == 1){
+			chart1 = new Chart("Chart1: Progress", dataset, chartNumber);
+		}else{
+			chart2 = new Chart("Chart2: Summary", dataset, chartNumber);
+		}
 	}
 	
 	private boolean checkSimulation(){

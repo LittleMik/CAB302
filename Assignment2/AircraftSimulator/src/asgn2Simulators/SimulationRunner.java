@@ -14,6 +14,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.Dataset;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -124,12 +127,14 @@ public class SimulationRunner {
 	 */
 	public void runSimulation(GUISimulator gs) throws AircraftException, PassengerException, SimulationException, IOException {
 		String outPutString = "";	
+		int maxQueue = 0;
+		
 		
 		this.sim.createSchedule();
 		this.log.initialEntry(this.sim);
 		
 		//Chart Dataset
-		XYSeriesCollection dataset = createDataset();
+		Dataset chart1Dataset = createChart1Dataset();
 		
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		outPutString = timeLog + ": Start of Simulation\n"+sim.toString() + "\n"+sim.getFlights(Constants.FIRST_FLIGHT).initialState();
@@ -139,6 +144,12 @@ public class SimulationRunner {
 			this.sim.rebookCancelledPassengers(time); 
 			this.sim.generateAndHandleBookings(time);
 			this.sim.processNewCancellations(time);
+			
+			//Get Max Queue Size
+			if(this.sim.numInQueue() > maxQueue){
+				maxQueue = this.sim.numInQueue();
+			}
+			
 			if (time >= Constants.FIRST_FLIGHT) {
 				this.sim.processUpgrades(time);
 				this.sim.processQueue(time);
@@ -151,7 +162,7 @@ public class SimulationRunner {
 				
 				//Update Chart
 				Bookings b = this.sim.getFlightStatus(time);
-				updateDataset(dataset, b, time);
+				updateDataset((XYSeriesCollection) chart1Dataset, b, time);
 			} else {
 				this.sim.processQueue(time);
 			}
@@ -170,15 +181,18 @@ public class SimulationRunner {
 		outPutString = outPutString + sim.finalState();		
 		gs.addToGUI(outPutString);
 		
-		//Add Chart to GUI
-		gs.addChart1(dataset);
+		//Get Chart2 Dataset
+		Dataset chart2Dataset = createDataset(maxQueue, this.sim.numRefused());
+		//Add Charts to GUI
+		gs.addChart(chart1Dataset, 1);
+		gs.addChart(chart2Dataset, 2);
 	}
 	
 	/**
 	 * Create an XYSeriesCollection with all series setup
 	 * @return XYSeriesCollection dataset
 	 */
-	private XYSeriesCollection createDataset(){
+	private XYSeriesCollection createChart1Dataset(){
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		XYSeries firstTotal = new XYSeries("First");
 		XYSeries businessTotal = new XYSeries("Business");
@@ -196,6 +210,15 @@ public class SimulationRunner {
 		return dataset;
 	}
 	
+	private CategoryDataset createDataset(int maxQueue, int numRefused){           
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		
+		dataset.addValue(maxQueue, "Passengers", "Queue Size");        
+		dataset.addValue(numRefused, "Passengers", "Passengers Refused");        
+		dataset.addValue(3 , "Passengers", "Daily Passenger Capacity");                        
+		
+		return dataset; 
+	 }
 	/**
      * Update Dataset's series with new plot points
 	 */

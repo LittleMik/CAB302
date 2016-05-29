@@ -4,23 +4,14 @@
 package asgn2Simulators;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Random;
-
-import javax.swing.JPanel;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
 
@@ -28,20 +19,27 @@ import org.jfree.ui.ApplicationFrame;
  * @author Michael
  *
  */
+@SuppressWarnings("serial")
 public class Chart extends ApplicationFrame {
 	
 	//Chart Constructor
-	public Chart(String title, XYDataset dataset){
+	public Chart(String title, Dataset dataset, int chartNumber){
 		super(title);
-        JFreeChart chart = createChart(dataset);
+		JFreeChart chart;
+        if(chartNumber == 1){
+        	chart = createXYChart((XYDataset) dataset);
+        }else{
+        	chart = createBarChart((CategoryDataset) dataset);
+        }
+        
         this.add(new ChartPanel(chart), BorderLayout.CENTER);
 	}
 	/**
-	 * Create and Setup JFreeChart Chart
+	 * Create and Setup JFreeChart XYLineChart
 	 * @param XYDataset dataset
 	 * @return JFreeChart chart
 	 */
-	private JFreeChart createChart(XYDataset dataset) {
+	private JFreeChart createXYChart(XYDataset dataset) {
         JFreeChart chart = ChartFactory.createXYLineChart(
             "Chart 1: Progress", "Days", "Passengers", dataset, PlotOrientation.VERTICAL, true, true, false);
         XYPlot plot = chart.getXYPlot();
@@ -49,6 +47,17 @@ public class Chart extends ApplicationFrame {
         domain.setRange(Constants.FIRST_FLIGHT, Constants.DURATION);
         ValueAxis range = plot.getRangeAxis();
         range.setAutoRange(true);
+        return chart;
+    }
+	
+	/**
+	 * Create and Setup JFreeChart Bar Chart
+	 * @param XYDataset dataset
+	 * @return JFreeChart chart
+	 */
+	private JFreeChart createBarChart(CategoryDataset dataset) {
+        JFreeChart chart = ChartFactory.createBarChart(
+            "Chart 2: Summary", "Passengers", "Categories", dataset, PlotOrientation.VERTICAL, true, true, false);
         return chart;
     }
 }
