@@ -16,6 +16,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
@@ -41,11 +42,11 @@ public class Chart extends ApplicationFrame {
 	 * @return JFreeChart chart
 	 */
 	private JFreeChart createChart(XYDataset dataset) {
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(
-            "Chart 1: Progress", "Days", "Passengers", dataset, true, true, false);
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            "Chart 1: Progress", "Days", "Passengers", dataset, PlotOrientation.VERTICAL, true, true, false);
         XYPlot plot = chart.getXYPlot();
         ValueAxis domain = plot.getDomainAxis();
-        domain.setAutoRange(true);
+        domain.setRange(Constants.FIRST_FLIGHT, Constants.DURATION);
         ValueAxis range = plot.getRangeAxis();
         range.setAutoRange(true);
         return chart;
