@@ -416,6 +416,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		//Consider the alternatives - not all active at once. 
 		resetBorders();
 		if (src== btnRun) {
+			fillInTheBlanks();
 			if(checkSimulation()){
 				 try {
 					l = new Log();
@@ -461,8 +462,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		}
 	}
 	
-	private boolean checkSimulation(){
-		 try{
+	private boolean checkSimulation(){ 
+		try{
 			 Integer.parseInt(txtInputRng.getText());
 		 }catch (NumberFormatException | NullPointerException e) {
 			 JOptionPane.showMessageDialog(null,"Invalid rng seed input");
@@ -547,5 +548,25 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		txtInputPremium.setBorder(border);
 		txtInputEconomy.setBorder(border);
 		txtInputCancellation.setBorder(border);
+	}
+	
+	private void fillInTheBlanks(){
+		if(txtInputRng.getText().isEmpty()){
+			txtInputRng.setText(Integer.toString(Constants.DEFAULT_SEED));
+		}else if(txtInputQsize.getText().isEmpty()){
+			txtInputQsize.setText(Integer.toString(Constants.DEFAULT_MAX_QUEUE_SIZE));
+		}else if(txtInputMean.getText().isEmpty()){
+			txtInputMean.setText(Double.toString(Constants.DEFAULT_DAILY_BOOKING_MEAN));
+		}else if(txtInputFirst.getText().isEmpty()){
+			txtInputFirst.setText(Double.toString(Constants.DEFAULT_FIRST_PROB));
+		}else if(txtInputPremium.getText().isEmpty()){
+			txtInputPremium.setText(Double.toString(Constants.DEFAULT_PREMIUM_PROB));
+		}else if(txtInputBusiness.getText().isEmpty()){
+			txtInputBusiness.setText(Double.toString(Constants.DEFAULT_BUSINESS_PROB));
+		}else if(txtInputEconomy.getText().isEmpty()){
+			txtInputEconomy.setText(Double.toString(Constants.DEFAULT_ECONOMY_PROB));
+		}else if(txtInputCancellation.getText().isEmpty()){
+			txtInputCancellation.setText(Double.toString(Constants.DEFAULT_CANCELLATION_PROB));
+		}
 	}
 }
