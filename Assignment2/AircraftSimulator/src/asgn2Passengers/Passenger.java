@@ -180,10 +180,10 @@ public abstract class Passenger {
 	 */
 	public void flyPassenger(int departureTime) throws PassengerException {
 		if(this.isConfirmed()){
-			if(this.departureTime > 0){				
-			this.flown = true;
-			this.confirmed = false;
-			this.departureTime = departureTime;
+			if(departureTime > 0){				
+				this.flown = true;
+				this.confirmed = false;
+				this.departureTime = departureTime;
 			}else{
 				throw new PassengerException("Invalid departure time");
 			}
