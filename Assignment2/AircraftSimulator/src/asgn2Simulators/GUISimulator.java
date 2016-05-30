@@ -440,6 +440,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 				}
 				 btnShow.setEnabled(true);
 			}
+			
 		}else if(src == btnShow){
 			chart1.pack();
             RefineryUtilities.centerFrameOnScreen(chart1);
@@ -468,7 +469,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 }catch (NumberFormatException | NullPointerException e) {
 			 JOptionPane.showMessageDialog(null,"Invalid rng seed input");
 			 txtInputRng.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
-			e.printStackTrace();
 			return false;
 		}
 		 
@@ -477,7 +477,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 }catch (NumberFormatException | NullPointerException e) {
 			 JOptionPane.showMessageDialog(null,"Invalid queue size input");
 			 txtQsize.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
-			e.printStackTrace();
 			return false;
 		}
 		 
@@ -486,7 +485,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 }catch (NumberFormatException | NullPointerException e) {
 			 JOptionPane.showMessageDialog(null,"Invalid daily mean input");
 			 txtInputMean.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
-			e.printStackTrace();
 			return false;
 		}
 		 
@@ -495,7 +493,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 }catch (NumberFormatException | NullPointerException e) {
 			 JOptionPane.showMessageDialog(null,"Invalid first input");
 			 txtInputFirst.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
-			e.printStackTrace();
 			return false;
 		}
 		 
@@ -504,7 +501,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 }catch (NumberFormatException | NullPointerException e) {
 			 JOptionPane.showMessageDialog(null,"Invalid business input");
 			 txtInputBusiness.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
-			e.printStackTrace();
 			return false;
 		}
 		 
@@ -522,7 +518,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 }catch (NumberFormatException | NullPointerException e) {
 			 JOptionPane.showMessageDialog(null,"Invalid economy input");
 			 txtInputEconomy.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
-			e.printStackTrace();
 			return false;
 		}
 		 
@@ -531,7 +526,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 }catch (NumberFormatException | NullPointerException e) {
 			 JOptionPane.showMessageDialog(null,"Invalid cancellation input");
 			 txtInputCancellation.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
-			e.printStackTrace();
 			return false;
 		}
 

@@ -69,5 +69,10 @@ public class BusinessTests {
 		assertEquals(testPassenger.noSeatsMsg(), "No seats available in Business");
 	}
 	
+	@Test
+	public void testt(){
+		assertTrue(!(testPassenger instanceof Business));
+	}
+	
 
 }

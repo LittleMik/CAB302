@@ -430,71 +430,48 @@ public abstract class Aircraft {
 		 * Seats index does not change for a given passenger
 		 */
 		List<Passenger> pass = this.seats;
-		for(int i = 0; i < this.seats.size(); i++){
-			Passenger p = pass.get(i);
-			//Check availability in next class
-			if(this.seatsAvailable(p.upgrade())){
-				//Upgrade passenger
-				this.seats.remove(i);
-				p = p.upgrade();
-				this.seats.add(i, p);
-				//Update class totals				
-				if(p instanceof First){
-					this.numFirst++;
-					this.numBusiness--;
-				}else if(p instanceof Business){
-					this.numBusiness++;
-					this.numPremium--;
-				}else if(p instanceof Premium){
-					this.numPremium++;
-					this.numEconomy--;
-				}
-			}
-		}
-		/*
-		if(this.sea)
-		for(int i = 0; i < this.seats.size(); i++){
+		int numberOfStates = 4;
+		int tempDepTime = 10;
+		int tempBookingTime = 3;
+		for(int j = 0; j< numberOfStates; j++){
+			for(int i = 0; i < this.seats.size(); i++){
 				Passenger p = pass.get(i);
-				//check passenger is eligible for first class upgrade
-				if(p instanceof Business){
-					if(this.seatsAvailable(p.upgrade())){
-					//upgrade passenger
-					
-					this.seats.remove(p);
-					p = p.upgrade();
-					this.seats.add(i,p);
-					this.numFirst++;
-					this.numBusiness--;
+				if(j == 0){
+					if(p instanceof Business){
+						if(this.seatsAvailable(p.upgrade())){
+							this.seats.remove(i);
+							p = p.upgrade();
+							this.seats.add(i, p);
+							this.numFirst++;
+							this.numBusiness--;
+						}
+					}
+				}else if(j == 1){
+					if(p instanceof Premium){
+						if(this.seatsAvailable(p.upgrade())){
+							this.seats.remove(i);
+							p = p.upgrade();
+							this.seats.add(i, p);
+							this.numBusiness++;
+							this.numPremium--;
+						}
+					}
+				}else if(j == 2){
+					if(p instanceof Economy){
+						if(this.seatsAvailable(p.upgrade())){
+							this.seats.remove(i);
+							p = p.upgrade();
+							this.seats.add(i, p);
+							this.numPremium++;
+							this.numEconomy--;
+						}
 					}
 				}
-		}
-		for(int i = 0; i < this.seats.size(); i++){
-			Passenger p = pass.get(i);
-			if(p instanceof Premium){	
-				if(this.seatsAvailable(p.upgrade())){
-					//upgrade passenger
-					this.seats.remove(p);
-					p = p.upgrade();
-					this.seats.add(i,p);
-					this.numBusiness++;
-					this.numPremium--;
-				}
-			 }
+				
+				
+			}
 		}
 		
-		for(int i = 0; i < this.seats.size(); i++){
-			Passenger p = pass.get(i);
-			if(p instanceof Economy){
-				if(this.seatsAvailable(p.upgrade())){
-					//upgrade passenger
-					this.seats.remove(p);
-					p = p.upgrade();
-					this.seats.add(i, p);
-					this.numPremium++;
-					this.numEconomy--;
-				}
-			}
-		}*/
 	}
 
 	/**

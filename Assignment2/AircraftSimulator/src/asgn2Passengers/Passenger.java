@@ -59,7 +59,8 @@ public abstract class Passenger {
 	protected int exitQueueTime;
 	protected int confirmationTime;
 	protected int departureTime; 
-	
+	private Boolean wasQueued = false;
+	private Boolean wasConfirmed = false;
 	
 	/**
 	 * Passenger Constructor 
@@ -158,6 +159,7 @@ public abstract class Passenger {
 			this.confirmed = true;
 			this.confirmationTime = confirmationTime;
 			this.departureTime = departureTime;
+			this.wasConfirmed = true;
 			}else{
 				throw new PassengerException("Invalid confirmation time");
 			}
@@ -323,6 +325,7 @@ public abstract class Passenger {
 				this.newState = false;
 				this.enterQueueTime = queueTime;
 				this.departureTime = departureTime;
+				this.wasQueued = true;
 			}else{
 				throw new PassengerException("Invalid departure time or queue time");
 			}
@@ -352,7 +355,7 @@ public abstract class Passenger {
 					this.newState = false;
 				}else{
 					this.inQueue = false;
-					this.departureTime = refusalTime;
+					//this.departureTime = refusalTime;
 					this.exitQueueTime = refusalTime;
 				}
 				this.refused = true;
@@ -404,11 +407,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if was Confirmed state; false otherwise
 	 */
 	public boolean wasConfirmed() {
-		if(this.confirmationTime > 0){
-			return true;
-		}else{
-			return false;
-		}
+		return wasConfirmed;
 	}
 
 	/**
@@ -417,11 +416,7 @@ public abstract class Passenger {
 	 * @return <code>boolean</code> true if was Queued state; false otherwise
 	 */
 	public boolean wasQueued() {
-		if(this.exitQueueTime > 0){
-			return true;
-		}else{
-			return false;
-		}
+		return wasQueued;
 	}
 	
 	/**

@@ -132,12 +132,13 @@ public class SimulationRunner {
 		
 		this.sim.createSchedule();
 		this.log.initialEntry(this.sim);
+
 		
 		//Chart Dataset
 		Dataset chart1Dataset = createChart1Dataset();
 		
 		String timeLog = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-		outPutString = timeLog + ": Start of Simulation\n"+sim.toString() + "\n"+sim.getFlights(Constants.FIRST_FLIGHT).initialState();
+		outPutString = timeLog + ": Start of Simulation\n" +sim.toString() + "\n" + sim.getFlights(Constants.FIRST_FLIGHT).initialState();
 		//Main simulation loop 
 		for (int time=0; time<=Constants.DURATION; time++) {
 			this.sim.resetStatus(time); 
