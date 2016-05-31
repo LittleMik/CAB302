@@ -431,8 +431,6 @@ public abstract class Aircraft {
 		 */
 		List<Passenger> pass = this.seats;
 		int numberOfStates = 4;
-		int tempDepTime = 10;
-		int tempBookingTime = 3;
 		for(int j = 0; j< numberOfStates; j++){
 			for(int i = 0; i < this.seats.size(); i++){
 				Passenger p = pass.get(i);
