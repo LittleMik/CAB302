@@ -6,18 +6,14 @@
  */
 package asgn2Simulators;
 
-import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -39,12 +35,10 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.RefineryUtilities;
-
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
 
@@ -52,13 +46,17 @@ import asgn2Passengers.PassengerException;
  * @author hogan
  *
  */
-@SuppressWarnings("serial")
+
 public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private static final long serialVersionUID = -7031008862559936404L;
 	public static final int WIDTH = 300;
 	public static final int HEIGHT = 200;
 	
-
+	/** Default Display Variables **/
+	private boolean showGraph = false;
+	private boolean showChart1 = true;
+	
+	/** GUI Elements **/
 	private JPanel pnlOne;
 	private JPanel pnlTwo;
 	private JPanel pnlThree;
@@ -67,6 +65,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	
 	private JButton btnRun;
 	private JButton btnShow;
+	private JButton btnSwitch;
 	
 	private JLabel txtOperation;
 	private JLabel txtFareClasses;
@@ -101,8 +100,10 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private JTextField txtInputQsize;
 	private JTextField txtInputCancellation;
 	
-	private Chart chart1;
-	private Chart chart2;
+	private JFreeChart chart1;
+	private JFreeChart chart2;
+	
+	private ChartPanel chartPanel;
 	
 	/**
 	 * @param arg0
@@ -114,23 +115,17 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	}	
 	
 	private void createGUI(){
-		
-		setSize(800, 500);
+		/** GUI Main Setup **/
+		setSize(800, 800);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(new BorderLayout());
 	    setResizable(false);
 	    
+	    /** Panels **/
 	    //Solution code uses different colours to highlight different panels 
+	    //Setup Panels
 	    pnlOne = createPanel(Color.lightGray);
 	    pnlTwo = createPanel(Color.lightGray);
-	    
-	    
-	    btnRun = createButton("Run Simulation");
-	    btnShow = createButton("Show Graph");
-	    
-	    btnRun.setPreferredSize(new Dimension(170,75));
-	    btnShow.setPreferredSize(new Dimension(170,75));
-	    
 	    pnlThree = new JPanel(new GridBagLayout());
 	    pnlThree.setBackground(Color.lightGray);
 	    pnlFive = new JPanel(new GridBagLayout());
@@ -138,28 +133,35 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    pnlFour = new JPanel(new GridBagLayout());
 	    pnlFour.setBackground(Color.lightGray);
 	    
+	    //Set Dimensions
+	    pnlOne.setPreferredSize(new Dimension(800,550));
+	    pnlTwo.setPreferredSize(new Dimension(200,250));
+	    pnlThree.setPreferredSize(new Dimension(300,250));
+	    pnlFive.setPreferredSize(new Dimension(300,250));
+	    
+	    /** Buttons **/
+	    //Setup Buttons
+	    btnRun = createButton("Run Simulation");
+	    btnShow = createButton("Show Graph");
+	    btnSwitch = createButton("Switch Graph");
+	    
+	    //Set Dimensions
+	    btnRun.setPreferredSize(new Dimension(170,37));
+	    btnShow.setPreferredSize(new Dimension(170,37));
+	    btnSwitch.setPreferredSize(new Dimension(170,37));
+	    
+	    /** Constraints **/
 	    GridBagConstraints c = new GridBagConstraints();
 	    GridBagConstraints c2 = new GridBagConstraints();
 	    GridBagConstraints c3 = new GridBagConstraints();
 	    
-	    pnlOne.setPreferredSize(new Dimension(800,250));
-	    pnlTwo.setPreferredSize(new Dimension(200,250));
-	    pnlThree.setPreferredSize(new Dimension(300,250));
-	    pnlFive.setPreferredSize(new Dimension(300,250));
-		    
+		/** Output Area **/
 	    txtOutPut = new JTextArea();
-	    
-	    txtInputFirst = new JTextField(10);
-	    txtInputBusiness = new JTextField(10);
-	    //txtOutPut.setPreferredSize(new Dimension(700,50));
 	    txtOutPut.setLineWrap(true);
 	    txtOutPut.setEditable(false);
 	    txtOutPut.setVisible(true);
-	    
-	    txtOperation = new JLabel();
-	    txtFareClasses = new JLabel();
-	    txtSimulation = new JLabel();
-	    
+	    	    	    
+	    /** BlankSpace **/	    //check this
 	    blankSpace = new JLabel();
 	    blankSpace.setForeground(Color.lightGray);
 	    blankSpace2 = new JLabel();
@@ -173,20 +175,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    blankSpace6 = new JLabel();
 	    blankSpace6.setForeground(Color.lightGray);
 	    
-	    txtFirst = new JLabel();
-	    txtPremium = new JLabel();
-	    txtBusiness = new JLabel();
-	    txtEconomy = new JLabel();
-	    
-	    txtRng = new JLabel();
-	    txtMean = new JLabel();
-	    txtQsize = new JLabel();
-	    txtCancellation = new JLabel();
-	    
-	    Font font1 = new Font("SansSerif", Font.BOLD, 20);
-	    Font heading = new Font("SansSerif", Font.BOLD, 22);
-	    Border empty = BorderFactory.createEmptyBorder();
-
 	    blankSpace.setText("Empty Space");
 	    blankSpace2.setText("Empty Space");
 	    blankSpace3.setText("Empty Space");
@@ -194,6 +182,30 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    blankSpace5.setText("Empty Space");
 	    blankSpace6.setText("Empty Space");
 	    
+	    /** Font Setup **/
+	    Font font1 = new Font("SansSerif", Font.BOLD, 20);
+	    Font heading = new Font("SansSerif", Font.BOLD, 22);
+	    Border empty = BorderFactory.createEmptyBorder();
+	    
+	    /** Display Text **/
+	    //Section Headers
+	    txtOperation = new JLabel();
+	    txtFareClasses = new JLabel();
+	    txtSimulation = new JLabel();
+	    
+	    //Column 1
+	    txtRng = new JLabel();
+	    txtMean = new JLabel();
+	    txtQsize = new JLabel();
+	    txtCancellation = new JLabel();
+	    
+	    //Column 2
+	    txtFirst = new JLabel();
+	    txtPremium = new JLabel();
+	    txtBusiness = new JLabel();
+	    txtEconomy = new JLabel();
+	    	    
+	    //Formatting
 	    txtOperation.setBackground(Color.gray);
 	    txtOperation.setBorder(empty);
 	    txtOperation.setFont(heading);
@@ -249,14 +261,14 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    txtCancellation.setFont(font1);
 	    txtCancellation.setText("Cancellation:");
 	    
-	    //pnlOne.add(txtOutPut);
+	    /** Scroll Pane **/
 	    JScrollPane scroll = new JScrollPane(txtOutPut);
 	    scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
-	    scroll.setPreferredSize(new Dimension(700, 200));
+	    scroll.setPreferredSize(new Dimension(700, 550));
 	    pnlOne.add(scroll);
 	    pnlTwo.add(txtOperation);
 	    
-
+	    /** Text Inputs */
 	    txtInputFirst = new JTextField(10);
 	    txtInputBusiness = new JTextField(10);
 	    txtInputEconomy = new JTextField(10);
@@ -277,6 +289,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    txtInputMean.setText("" + Constants.DEFAULT_DAILY_BOOKING_MEAN);
 	    txtInputQsize.setText("" + Constants.DEFAULT_MAX_QUEUE_SIZE);
 	    txtInputCancellation.setText("" + Constants.DEFAULT_CANCELLATION_PROB);
+	    
+	    /** **/
+	    
 	    
 	    layoutButtonPanel();
 	    
@@ -384,9 +399,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    
 	    addToPanel(pnlTwo, btnRun , buttons,0,0,2,1);
 	    addToPanel(pnlTwo, btnShow , buttons,0,2,2,1);
+	    addToPanel(pnlTwo, btnSwitch, buttons,0,4,2,1);
 	    btnShow.setEnabled(false);
-	   
-	   
+	    btnSwitch.setEnabled(false);
 	}
 	
 	/* (non-Javadoc)
@@ -439,28 +454,124 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 					e.printStackTrace();
 				}
 				 btnShow.setEnabled(true);
+				 
 			}
 			
 		}else if(src == btnShow){
-			chart1.pack();
-            RefineryUtilities.centerFrameOnScreen(chart1);
-            chart1.setVisible(true);
-            chart2.pack();
-            RefineryUtilities.centerFrameOnScreen(chart2);
-            chart2.setVisible(true);
+			/*
+			 * Toggle Graph Display
+			 * Invert showGraph variable and update the GUI to display
+			 * a graph if showGraph is true or the logs if showGraph is false
+			 */
+			//Update showGraphs variable
+			showGraph = (showGraph) ? false : true;
+			if(showGraph){
+				//Show Graph/Hide Logs
+				this.getContentPane().remove(pnlOne);
+				//Update ChartPanel according to active chart
+				updateChartPanel((showChart1) ? chart1 : chart2);
+				this.getContentPane().add(chartPanel, BorderLayout.NORTH);
+				
+				//Change Toggle Graph Button Text
+				btnShow.setText("Show Log");
+				
+				//Enable Graph Switching
+				btnSwitch.setEnabled(true);
+			}else{
+				//Hide Graphs/Show Logs
+				this.getContentPane().remove(chartPanel);
+				this.getContentPane().add(pnlOne, BorderLayout.NORTH);
+				
+				//Change Toggle Graph Button Text
+				btnShow.setText("Show Graph");
+				
+				//Disable Graph Switching
+				btnSwitch.setEnabled(false);
+			}
+			//Refresh Contents
+			this.revalidate();
+			this.repaint();
+		}else if(src == btnSwitch){
+			/*
+			 * Toggle Active Chart
+			 * If displaying chart1, update chartPanel to show chart2
+			 * If displaying chart2, update chartPanel to show chart1
+			 */
+			//Update showChart1 variable
+			showChart1 = (showChart1) ? false : true;
+			//Update ChartPanel according to which chart is currently being displayed
+			this.getContentPane().remove(chartPanel);
+			//Update ChartPanel according to which chart should be displayed
+			updateChartPanel((showChart1) ? chart1 : chart2);
+			this.getContentPane().add(chartPanel, BorderLayout.NORTH);
+			//Refresh Contents
+			this.revalidate();
+			this.repaint();
 		}
 	}
 	
+	/**
+	 * Add text output result to the GUI
+	 * @param outputString - string containing text to push to display 
+	 */
 	public void addToGUI(String outputString){
 		txtOutPut.setText(outputString);
 	}
 	
-	public void addChart(Dataset dataset, int chartNumber){
+	/**
+	 * Add charts created from the simulator to the GUI
+	 * @param dataset - XYSeriesCollection containing charts data
+	 * @param chartNumber - chart number the dataset belongs to
+	 */
+	public void addChart(XYSeriesCollection dataset, int chartNumber){
+		/*
+		 * Create chart for the dataset according to the
+		 * chart number specified
+		 */
 		if(chartNumber == 1){
-			chart1 = new Chart("Chart1: Progress", dataset, chartNumber);
+			chart1 = createChart(chartNumber, dataset);
 		}else{
-			chart2 = new Chart("Chart2: Summary", dataset, chartNumber);
+			chart2 = createChart(chartNumber, dataset);
 		}
+	}
+	
+	/**
+	 * Create and Setup JFreeChart XYLineChart
+	 * @param XYDataset dataset
+	 * @return JFreeChart chart
+	 */
+	private JFreeChart createChart(int chartNumber, XYDataset dataset) {
+		JFreeChart chart;
+		if(chartNumber == 1){
+			chart = ChartFactory.createXYLineChart(
+	            "Chart 1: Progress", "Days", "Passengers", dataset, PlotOrientation.VERTICAL, true, true, false);
+	        XYPlot plot = chart.getXYPlot();
+	        ValueAxis domain = plot.getDomainAxis();
+	        domain.setRange(Constants.FIRST_FLIGHT, Constants.DURATION);
+	        ValueAxis range = plot.getRangeAxis();
+	        range.setAutoRange(true);
+		}else{
+			chart = ChartFactory.createXYLineChart(
+				"Chart 2: Summary", "Days", "Passengers", dataset, PlotOrientation.VERTICAL, true, true, false);
+			XYPlot plot = chart.getXYPlot();
+	        ValueAxis domain = plot.getDomainAxis();
+	        domain.setRange(0, Constants.DURATION);
+	        ValueAxis range = plot.getRangeAxis();
+	        range.setAutoRange(true);
+		}
+        return chart;
+    }
+	
+	/**
+	 * Update the chartPanel to display the given chart
+	 * @param chart - JFreeChart to display
+	 */
+	private void updateChartPanel(JFreeChart chart){
+		//Setup a new chartPanel containing the given chart
+	    chartPanel = new ChartPanel(chart);
+	    chartPanel.setBackground(Color.lightGray);
+	    //Set Dimension
+	    chartPanel.setPreferredSize(new Dimension(800,550));
 	}
 	
 	private boolean checkSimulation(){ 
