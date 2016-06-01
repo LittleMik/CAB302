@@ -175,8 +175,8 @@ public class SimulationRunner {
 		gs.addToGUI(outPutString);
 		
 		//Add Charts to GUI
-		gs.addChart(chart1Dataset, chart1);
-		gs.addChart(chart2Dataset, chart2);
+		gs.addChart(chart1, chart1Dataset);
+		gs.addChart(chart2, chart2Dataset);
 	}
 	
 	/**
@@ -187,14 +187,14 @@ public class SimulationRunner {
 	private XYSeriesCollection createDataset(int chartNumber){
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		if(chartNumber == 1){
-			//Setup Chart1 Dataset
+			//Setup All Series
 			XYSeries firstTotal = new XYSeries("First");
 			XYSeries businessTotal = new XYSeries("Business");
 			XYSeries premiumTotal = new XYSeries("Premium");
 			XYSeries economyTotal = new XYSeries("Economy");
 			XYSeries passengerTotal = new XYSeries("Total");
 			XYSeries seatsAvailable = new XYSeries("Seats Available");
-			
+			//Add All Series to Dataset
 			dataset.addSeries(firstTotal);
 			dataset.addSeries(businessTotal);
 			dataset.addSeries(premiumTotal);
@@ -202,10 +202,10 @@ public class SimulationRunner {
 			dataset.addSeries(passengerTotal);
 			dataset.addSeries(seatsAvailable);
 		}else{
-			//Setup Chart2 Dataset
+			//Setup Chart2 Series
 			XYSeries queueSize = new XYSeries("Queue Size");
 			XYSeries passengersRefused = new XYSeries("Passengers Refused");
-			
+			//Add All Series to Dataset
 			dataset.addSeries(queueSize);
 			dataset.addSeries(passengersRefused);
 		}
@@ -218,13 +218,14 @@ public class SimulationRunner {
 	 */
 	private void updateDataset(int chartNumber, XYSeriesCollection dataset, Bookings b, int time) {
 		if(chartNumber == 1){
+			//Get all dataset's series
 			XYSeries firstTotal = dataset.getSeries(0);
 			XYSeries businessTotal = dataset.getSeries(1);
 			XYSeries premiumTotal = dataset.getSeries(2);
 			XYSeries economyTotal = dataset.getSeries(3);
 			XYSeries passengerTotal = dataset.getSeries(4);
 			XYSeries seatsAvailable = dataset.getSeries(5);
-			
+			//Add next point to each series
 		    firstTotal.add(time, b.getNumFirst());
 		    businessTotal.add(time, b.getNumBusiness());
 		    premiumTotal.add(time, b.getNumPremium());
@@ -232,9 +233,10 @@ public class SimulationRunner {
 		    passengerTotal.add(time, b.getTotal());
 		    seatsAvailable.add(time, b.getAvailable());
 		}else{
+			//Get all dataset's series
 			XYSeries queueSize = dataset.getSeries(0);
 			XYSeries passengersRefused = dataset.getSeries(1);
-			
+			//Add next point to each series
 			queueSize.add(time, this.sim.numInQueue());
 			passengersRefused.add(time, this.sim.numRefused());
 		}

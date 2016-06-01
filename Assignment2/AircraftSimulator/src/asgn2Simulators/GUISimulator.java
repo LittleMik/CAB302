@@ -432,7 +432,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		resetBorders();
 		if (src== btnRun) {
 			fillInTheBlanks();
-			if(checkSimulation()){
+			if(checkSimulation()&& checkProbs()){
 				 try {
 					l = new Log();
 				} catch (IOException e1) {
@@ -590,8 +590,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 
 		 try{
 			 if(Integer.parseInt(txtInputQsize.getText()) < 0){
-				 JOptionPane.showMessageDialog(null,"Invalid rng seed input");
-				 txtInputRng.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+				 JOptionPane.showMessageDialog(null,"Invalid queue size input");
+				 txtInputQsize.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
 				 return false;
 			 }
 		 }catch (NumberFormatException | NullPointerException e) {
@@ -602,8 +602,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 
 		 try{
 			 if(Double.parseDouble(txtInputMean.getText()) < 0){
-				 JOptionPane.showMessageDialog(null,"Invalid rng seed input");
-				 txtInputRng.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+				 JOptionPane.showMessageDialog(null,"Invalid mean input");
+				 txtInputMean.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
 				 return false;
 			 }
 		 }catch (NumberFormatException | NullPointerException e) {
@@ -614,8 +614,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 
 		 try{
 			 if( Double.parseDouble(txtInputFirst.getText()) < 0){
-				 JOptionPane.showMessageDialog(null,"Invalid rng seed input");
-				 txtInputRng.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+				 JOptionPane.showMessageDialog(null,"Invalid first input");
+				 txtInputFirst.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
 				 return false;
 			 }
 		 }catch (NumberFormatException | NullPointerException e) {
@@ -626,8 +626,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 
 		 try{
 			 if(Double.parseDouble(txtInputBusiness.getText()) < 0){
-				 JOptionPane.showMessageDialog(null,"Invalid rng seed input");
-				 txtInputRng.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+				 JOptionPane.showMessageDialog(null,"Invalid business input");
+				 txtInputBusiness.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
 				 return false;
 			 }
 		 }catch (NumberFormatException | NullPointerException e) {
@@ -638,8 +638,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 
 		 try{
 			 if( Double.parseDouble(txtInputPremium.getText())< 0){
-				 JOptionPane.showMessageDialog(null,"Invalid rng seed input");
-				 txtInputRng.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+				 JOptionPane.showMessageDialog(null,"Invalid premium input");
+				 txtInputPremium.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
 				 return false;
 			 }
 			
@@ -652,8 +652,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 
 		 try{
 			 if( Double.parseDouble(txtInputEconomy.getText())< 0){
-				 JOptionPane.showMessageDialog(null,"Invalid rng seed input");
-				 txtInputRng.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+				 JOptionPane.showMessageDialog(null,"Invalid economy input");
+				 txtInputEconomy.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
 				 return false;
 			 }
 		 }catch (NumberFormatException | NullPointerException e) {
@@ -664,8 +664,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 
 		 try{
 			 if(Double.parseDouble(txtInputCancellation.getText())< 0){
-				 JOptionPane.showMessageDialog(null,"Invalid rng seed input");
-				 txtInputRng.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+				 JOptionPane.showMessageDialog(null,"Invalid cancellation probabilty input");
+				 txtInputCancellation.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
 				 return false;
 			 }
 
@@ -688,6 +688,15 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		txtInputPremium.setBorder(border);
 		txtInputEconomy.setBorder(border);
 		txtInputCancellation.setBorder(border);
+	}
+	
+	private boolean checkProbs(){
+		if(Double.parseDouble(txtInputEconomy.getText())+Double.parseDouble(txtInputBusiness.getText())+Double.parseDouble(txtInputPremium.getText())+Double.parseDouble(txtInputFirst.getText())==1){
+			return true;
+		}else{
+			JOptionPane.showMessageDialog(null,"probabilities need to add to one");
+			return false;
+		}
 	}
 	
 	private void fillInTheBlanks(){
