@@ -31,13 +31,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.ValueAxis;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeriesCollection;
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
@@ -100,11 +93,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private JTextField txtInputQsize;
 	private JTextField txtInputCancellation;
 	
-	private JFreeChart chart1;
-	private JFreeChart chart2;
-	
-	private ChartPanel chartPanel;
-	
+	private ChartPanel chartPanel1;
+	private ChartPanel chartPanel2;
+	private ChartPanel activeChartPanel;
 	/**
 	 * @param arg0
 	 * @throws HeadlessException
@@ -418,7 +409,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 */
 	public static void main(String[] args) {
 		JFrame.setDefaultLookAndFeelDecorated(true);
-        SwingUtilities.invokeLater(new GUISimulator("BorderLayout"));
+        SwingUtilities.invokeLater(new GUISimulator("Aircraft Simulator"));
 
 	}
 
@@ -469,8 +460,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 				//Show Graph/Hide Logs
 				this.getContentPane().remove(pnlOne);
 				//Update ChartPanel according to active chart
-				updateChartPanel((showChart1) ? chart1 : chart2);
-				this.getContentPane().add(chartPanel, BorderLayout.NORTH);
+				activeChartPanel = (showChart1) ? chartPanel1 : chartPanel2;
+				this.getContentPane().add(activeChartPanel.getChartPanel(), BorderLayout.NORTH);
 				
 				//Change Toggle Graph Button Text
 				btnShow.setText("Show Log");
@@ -479,7 +470,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 				btnSwitch.setEnabled(true);
 			}else{
 				//Hide Graphs/Show Logs
-				this.getContentPane().remove(chartPanel);
+				this.getContentPane().remove(activeChartPanel.getChartPanel());
 				this.getContentPane().add(pnlOne, BorderLayout.NORTH);
 				
 				//Change Toggle Graph Button Text
@@ -500,10 +491,10 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			//Update showChart1 variable
 			showChart1 = (showChart1) ? false : true;
 			//Update ChartPanel according to which chart is currently being displayed
-			this.getContentPane().remove(chartPanel);
+			this.getContentPane().remove(activeChartPanel.getChartPanel());
 			//Update ChartPanel according to which chart should be displayed
-			updateChartPanel((showChart1) ? chart1 : chart2);
-			this.getContentPane().add(chartPanel, BorderLayout.NORTH);
+			activeChartPanel = (showChart1) ? chartPanel1 : chartPanel2;
+			this.getContentPane().add(activeChartPanel.getChartPanel(), BorderLayout.NORTH);
 			//Refresh Contents
 			this.revalidate();
 			this.repaint();
@@ -523,55 +514,17 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 * @param dataset - XYSeriesCollection containing charts data
 	 * @param chartNumber - chart number the dataset belongs to
 	 */
-	public void addChart(XYSeriesCollection dataset, int chartNumber){
+	public void addChart(int chartNumber, XYSeriesCollection dataset){
 		/*
 		 * Create chart for the dataset according to the
 		 * chart number specified
 		 */
 		if(chartNumber == 1){
-			chart1 = createChart(chartNumber, dataset);
+			chartPanel1 = new ChartPanel(chartNumber, dataset);
 		}else{
-			chart2 = createChart(chartNumber, dataset);
+			chartPanel2 = new ChartPanel(chartNumber, dataset);
 		}
-	}
-	
-	/**
-	 * Create and Setup JFreeChart XYLineChart
-	 * @param XYDataset dataset
-	 * @return JFreeChart chart
-	 */
-	private JFreeChart createChart(int chartNumber, XYDataset dataset) {
-		JFreeChart chart;
-		if(chartNumber == 1){
-			chart = ChartFactory.createXYLineChart(
-	            "Chart 1: Progress", "Days", "Passengers", dataset, PlotOrientation.VERTICAL, true, true, false);
-	        XYPlot plot = chart.getXYPlot();
-	        ValueAxis domain = plot.getDomainAxis();
-	        domain.setRange(Constants.FIRST_FLIGHT, Constants.DURATION);
-	        ValueAxis range = plot.getRangeAxis();
-	        range.setAutoRange(true);
-		}else{
-			chart = ChartFactory.createXYLineChart(
-				"Chart 2: Summary", "Days", "Passengers", dataset, PlotOrientation.VERTICAL, true, true, false);
-			XYPlot plot = chart.getXYPlot();
-	        ValueAxis domain = plot.getDomainAxis();
-	        domain.setRange(0, Constants.DURATION);
-	        ValueAxis range = plot.getRangeAxis();
-	        range.setAutoRange(true);
-		}
-        return chart;
-    }
-	
-	/**
-	 * Update the chartPanel to display the given chart
-	 * @param chart - JFreeChart to display
-	 */
-	private void updateChartPanel(JFreeChart chart){
-		//Setup a new chartPanel containing the given chart
-	    chartPanel = new ChartPanel(chart);
-	    chartPanel.setBackground(Color.lightGray);
-	    //Set Dimension
-	    chartPanel.setPreferredSize(new Dimension(800,550));
+		activeChartPanel = new ChartPanel();
 	}
 
 	private boolean checkSimulation(){ 
