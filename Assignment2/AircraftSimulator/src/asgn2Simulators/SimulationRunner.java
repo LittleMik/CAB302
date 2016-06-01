@@ -17,6 +17,7 @@ import asgn2Aircraft.AircraftException;
 import asgn2Aircraft.Bookings;
 import asgn2Passengers.PassengerException;
 
+
 /**
  * Class to operate the simulation, taking parameters and utility methods from the Simulator
  * to control the available resources, and using Log to provide a record of operation. 
@@ -24,38 +25,57 @@ import asgn2Passengers.PassengerException;
  * @author hogan
  *
  */ 
+
 public class SimulationRunner {
+	public static int runDatGui = 1;
 	/**
 	 * Main program for the simulation 
 	 * 
 	 * @param args Arguments to the simulation - 
 	 * see {@link asgn2Simulators.SimulationRunner#printErrorAndExit()}
 	 */
+	
 	public static void main(String[] args) {
 		final int NUM_ARGS = 9; 
 		Simulator s = null; 
 		Log l = null; 
-		GUISimulator gui = new GUISimulator("Assignment2");
-		gui.run();
-//		try {
-//			switch (args.length) {
-//				case NUM_ARGS: {
-//					s = createSimulatorUsingArgs(args); 
-//					break;
-//				}
-//				case 0: {
-//					s = new Simulator(); 
-//					break;
-//				}
-//				default: {
-//					printErrorAndExit(); 
-//				}
-//			}
-//			l = new Log();
-//		} catch (SimulationException | IOException e1) {
-//			e1.printStackTrace();
-//			System.exit(-1);
-//		}
+		if(args.length < 10){
+			GUISimulator gui = new GUISimulator("Assignment2");
+			gui.run();
+		}else{
+			try {
+				switch (args.length) {
+					case NUM_ARGS: {
+						s = createSimulatorUsingArgs(args); 
+						break;
+					}
+					case 0: {
+						s = createSimulatorUsingArgs(args); 
+						break;
+					}
+					case 10: {
+						runDatGui = 0;
+						s = createSimulatorUsingArgs(args); 
+						break;
+					}
+					default: {
+						printErrorAndExit(); 
+					}
+				}
+				l = new Log();
+			} catch (SimulationException | IOException e1) {
+				e1.printStackTrace();
+				System.exit(-1);
+			}
+			SimulationRunner sr = new SimulationRunner(s,l);
+			try {
+				GUISimulator guiDontShow = new GUISimulator("Assignment2");
+				sr.runSimulation(guiDontShow);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
+		}
 
 	}
 	/**
@@ -172,11 +192,13 @@ public class SimulationRunner {
 		String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		outPutString = outPutString + "\n" + time + ": End of Simulation\n";
 		outPutString = outPutString + sim.finalState();		
-		gs.addToGUI(outPutString);
-		
-		//Add Charts to GUI
-		gs.addChart(chart1, chart1Dataset);
-		gs.addChart(chart2, chart2Dataset);
+		if(runDatGui == 1){
+			gs.addToGUI(outPutString);
+			
+			//Add Charts to GUI
+			gs.addChart(chart1, chart1Dataset);
+			gs.addChart(chart2, chart2Dataset);
+		}
 	}
 	
 	/**
@@ -187,14 +209,14 @@ public class SimulationRunner {
 	private XYSeriesCollection createDataset(int chartNumber){
 		XYSeriesCollection dataset = new XYSeriesCollection();
 		if(chartNumber == 1){
-			//Setup All Series
+			//Setup Chart1 Dataset
 			XYSeries firstTotal = new XYSeries("First");
 			XYSeries businessTotal = new XYSeries("Business");
 			XYSeries premiumTotal = new XYSeries("Premium");
 			XYSeries economyTotal = new XYSeries("Economy");
 			XYSeries passengerTotal = new XYSeries("Total");
 			XYSeries seatsAvailable = new XYSeries("Seats Available");
-			//Add All Series to Dataset
+			
 			dataset.addSeries(firstTotal);
 			dataset.addSeries(businessTotal);
 			dataset.addSeries(premiumTotal);
@@ -202,10 +224,10 @@ public class SimulationRunner {
 			dataset.addSeries(passengerTotal);
 			dataset.addSeries(seatsAvailable);
 		}else{
-			//Setup Chart2 Series
+			//Setup Chart2 Dataset
 			XYSeries queueSize = new XYSeries("Queue Size");
 			XYSeries passengersRefused = new XYSeries("Passengers Refused");
-			//Add All Series to Dataset
+			
 			dataset.addSeries(queueSize);
 			dataset.addSeries(passengersRefused);
 		}
@@ -218,14 +240,13 @@ public class SimulationRunner {
 	 */
 	private void updateDataset(int chartNumber, XYSeriesCollection dataset, Bookings b, int time) {
 		if(chartNumber == 1){
-			//Get all dataset's series
 			XYSeries firstTotal = dataset.getSeries(0);
 			XYSeries businessTotal = dataset.getSeries(1);
 			XYSeries premiumTotal = dataset.getSeries(2);
 			XYSeries economyTotal = dataset.getSeries(3);
 			XYSeries passengerTotal = dataset.getSeries(4);
 			XYSeries seatsAvailable = dataset.getSeries(5);
-			//Add next point to each series
+			
 		    firstTotal.add(time, b.getNumFirst());
 		    businessTotal.add(time, b.getNumBusiness());
 		    premiumTotal.add(time, b.getNumPremium());
@@ -233,10 +254,9 @@ public class SimulationRunner {
 		    passengerTotal.add(time, b.getTotal());
 		    seatsAvailable.add(time, b.getAvailable());
 		}else{
-			//Get all dataset's series
 			XYSeries queueSize = dataset.getSeries(0);
 			XYSeries passengersRefused = dataset.getSeries(1);
-			//Add next point to each series
+			
 			queueSize.add(time, this.sim.numInQueue());
 			passengersRefused.add(time, this.sim.numRefused());
 		}

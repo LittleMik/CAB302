@@ -648,6 +648,10 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			return true;
 		}else{
 			JOptionPane.showMessageDialog(null,"probabilities need to add to one");
+			txtInputFirst.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+			txtInputBusiness.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+			txtInputPremium.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
+			txtInputEconomy.setBorder(BorderFactory.createLineBorder(Color.decode("#FF0000")));
 			return false;
 		}
 	}
