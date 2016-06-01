@@ -35,26 +35,27 @@ public class SimulationRunner {
 		final int NUM_ARGS = 9; 
 		Simulator s = null; 
 		Log l = null; 
-		
-		try {
-			switch (args.length) {
-				case NUM_ARGS: {
-					s = createSimulatorUsingArgs(args); 
-					break;
-				}
-				case 0: {
-					s = new Simulator(); 
-					break;
-				}
-				default: {
-					printErrorAndExit(); 
-				}
-			}
-			l = new Log();
-		} catch (SimulationException | IOException e1) {
-			e1.printStackTrace();
-			System.exit(-1);
-		}
+		GUISimulator gui = new GUISimulator("Assignment2");
+		gui.run();
+//		try {
+//			switch (args.length) {
+//				case NUM_ARGS: {
+//					s = createSimulatorUsingArgs(args); 
+//					break;
+//				}
+//				case 0: {
+//					s = new Simulator(); 
+//					break;
+//				}
+//				default: {
+//					printErrorAndExit(); 
+//				}
+//			}
+//			l = new Log();
+//		} catch (SimulationException | IOException e1) {
+//			e1.printStackTrace();
+//			System.exit(-1);
+//		}
 
 	}
 	/**
