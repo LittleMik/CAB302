@@ -39,14 +39,24 @@ public class SimulationRunner {
 		final int NUM_ARGS = 9; 
 		Simulator s = null; 
 		Log l = null; 
-		if(args.length == 10){
-			if(args[9].contains("-gui")){
-				GUISimulator gui = new GUISimulator("Assignment2");
-				gui.run();
+		if(args.length == 1){
+			if(!((args[0].contains("-gui"))||(args[0].contains("-nogui")))){
+				printErrorAndExitNoGui();
 			}
 		}
+		if(args.length == 10){
+			if(args[9].contains("-gui")){
+				GUISimulator gui = new GUISimulator("Assignment2", args);
+				gui.run();
+			}else if(args[9].contains("-nogui")){
+				
+			}else{
+				printErrorAndExitNoGui();
+			}
+		}
+		
 		if((args.length == 1 && args[0].contains("-gui"))||(args.length == 9)||(args.length == 0)){
-			GUISimulator gui = new GUISimulator("Assignment2");
+			GUISimulator gui = new GUISimulator("Assignment 2", args);
 			gui.run();
 		}else{
 			try {
@@ -80,7 +90,7 @@ public class SimulationRunner {
 			}
 			SimulationRunner sr = new SimulationRunner(s,l);
 			try {
-				GUISimulator guiDontShow = new GUISimulator("Assignment2");
+				GUISimulator guiDontShow = new GUISimulator("Assignment2",args);
 				sr.runSimulation(guiDontShow);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -122,7 +132,12 @@ public class SimulationRunner {
 		System.err.println(str);
 		System.exit(-1);
 	}
-	
+
+	private static void printErrorAndExitNoGui() {
+		String str = "please state if you want the gui or not. Or enter all parameters";
+		System.err.println(str);
+		System.exit(-1);
+	}
 	
 	private Simulator sim;
 	private Log log;

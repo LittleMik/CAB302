@@ -18,7 +18,7 @@ import asgn2Passengers.PassengerException;
 import asgn2Passengers.Premium;
 
 public class A380Tests {
-	//Define some of the variables that will be used throughout the tests
+	/** TEST VARIABLES **/
 	A380 tempFlight;
 	Business tempPassenger;
 	A380 UnchangedFlight;
@@ -37,7 +37,7 @@ public class A380Tests {
 	int numberOne;
 	String airCode;
 	
-	//Set up an iniital flight and an initial passenger
+	/**--------- A380: SETUP ---------**/	
 	@Before 
 	public void initialize() throws AircraftException, PassengerException {
 		airDepartureTime = 20;
@@ -57,38 +57,68 @@ public class A380Tests {
 	}
 	
 	
-	//Testing constructor throws exceptions
+	/**--------- A380: CONSTRUCTOR TESTS ---------**/	
+	/**Exception Testing
+	 * 
+	 * AircraftException - if isNull(flightCode) OR (departureTime <=0) OR ({first,business,premium,economy} <0)
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#A380(String, int)}.
+	 * @throws AircraftException 
+	 */
 	@Test(expected = AircraftException.class)
-	public void EmptyCode() throws AircraftException {
+	public void EmptyAirCode() throws AircraftException {
 		A380 exceptionFlight = new A380("",airDepartureTime);
 	}
-	
+
+	/**Exception Testing
+	 * 
+	 * AircraftException - if isNull(flightCode) OR (departureTime <=0) OR ({first,business,premium,economy} <0)
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#A380(String, int)}.
+	 * @throws AircraftException 
+	 */
 	@Test(expected = AircraftException.class)
 	public void NullCode() throws AircraftException {
 		A380 exceptionFlight = new A380(null,airDepartureTime);
 	}
-	
+
+	/**Exception Testing
+	 * 
+	 * AircraftException - if isNull(flightCode) OR (departureTime <=0) OR ({first,business,premium,economy} <0)
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#A380(String, int)}.
+	 * @throws AircraftException 
+	 */
 	@Test(expected = AircraftException.class)
 	public void ZeroDepTime() throws AircraftException {
 		A380 exceptionFlight = new A380(airCode,zeroVal);
 	}
 	
+	/**Exception Testing
+	 * 
+	 * AircraftException - if isNull(flightCode) OR (departureTime <=0) OR ({first,business,premium,economy} <0)
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#A380(String, int)}.
+	 * @throws AircraftException 
+	 */
 	@Test(expected = AircraftException.class)
 	public void LessThenZeroDepTime() throws AircraftException {
 		A380 exceptionFlight = new A380(airCode,negativeVal);
 	}
 	
-	
-	
-	
-	
-	
-	//Test appropriate exceptions are thrown for cancel booking
-	
-	//Changed in cancel book departureTime < cancel time... You had greater >. Because I think the 
-	//point of the error is you cant cancel if the plain has already left. And Not sure if cancel
-	//booking is finished because the passenger is never removed....
-	
+	/**--------- A380: CANCELBOOKINGS TEST ---------**/	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void CancelPassengerPassConfirmed() throws AircraftException, PassengerException {
 		//change the state of passenger.
@@ -98,6 +128,18 @@ public class A380Tests {
 
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void CancelPassengerPassFlown() throws AircraftException, PassengerException {
 		//change the state of passenger.
@@ -106,6 +148,18 @@ public class A380Tests {
 		tempFlight.cancelBooking(tempPassenger, cancellationTime);	
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void CancelPassengerPassRefused() throws AircraftException, PassengerException {
 		//change the state of passenger.
@@ -114,6 +168,18 @@ public class A380Tests {
 		tempFlight.cancelBooking(tempPassenger, cancellationTime);	
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void CancelPassengerPassQueued() throws AircraftException, PassengerException {
 		//change the state of passenger.
@@ -122,18 +188,54 @@ public class A380Tests {
 		tempFlight.cancelBooking(tempPassenger, cancellationTime);	
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void CancelDepTimeLessThenConTime() throws AircraftException, PassengerException {
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
 		tempFlight.cancelBooking(tempPassenger, airDepartureTime+1);	
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void CancelConTimeLessThenZero() throws AircraftException, PassengerException {
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
 		tempFlight.cancelBooking(tempPassenger, negativeVal);	
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = AircraftException.class)
 	public void CancelPassengerNotInFlight() throws AircraftException, PassengerException {
 		//need to set passenger to confirmed or it will throw an exception. To do this we need another flight
@@ -142,6 +244,10 @@ public class A380Tests {
 		tempFlight.cancelBooking(tempPassenger, cancellationTime);	
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void CheckBookingActuallyCancelledBusiness() throws AircraftException, PassengerException {
 		
@@ -168,6 +274,10 @@ public class A380Tests {
 	
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void CheckBookingActuallyCancelledFirst() throws AircraftException, PassengerException {
 		
@@ -193,6 +303,10 @@ public class A380Tests {
 		assertEquals(tempFlight.getNumPremium(), beforeconPrem);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void CheckBookingActuallyCancelledPrem() throws AircraftException, PassengerException {
 	
@@ -218,6 +332,10 @@ public class A380Tests {
 	
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void CheckBookingActuallyCancelledEconomy() throws AircraftException, PassengerException {
 		
@@ -242,64 +360,137 @@ public class A380Tests {
 		assertEquals(tempFlight.getNumPremium(), beforeconPrem);
 	
 	}
-	//Test appropriate exceptions are thrown for confirm booking
 	
-	
-	
-	
-	
-	
-	
+	/**--------- A380: CONFIRMBOOKINGS TEST ---------**/	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state OR confirmationTime OR departureTime is invalid. See Passenger.confirmSeat(int, int)
+	 * AircraftException - 
+	 * if no seats available in Passenger fare class.
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void ConfirmPassengerAlreadyConfirmed() throws AircraftException, PassengerException {
 		//change the state of passenger.
 		tempPassenger.confirmSeat(confirmationTime, passDepartureTime);
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);	
 	}
-	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state OR confirmationTime OR departureTime is invalid. See Passenger.confirmSeat(int, int)
+	 * AircraftException - 
+	 * if no seats available in Passenger fare class.
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void ConfirmPassengerFlown() throws AircraftException, PassengerException {
 		//change the state of passenger.
 		tempPassenger.flyPassenger(flightTime);
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);	
 	}
-	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state OR confirmationTime OR departureTime is invalid. See Passenger.confirmSeat(int, int)
+	 * AircraftException - 
+	 * if no seats available in Passenger fare class.
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void ConfirmPassengerRefused() throws AircraftException, PassengerException {
 		//change the state of passenger.
 		tempPassenger.refusePassenger(19);
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);	
 	}
-	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state OR confirmationTime OR departureTime is invalid. See Passenger.confirmSeat(int, int)
+	 * AircraftException - 
+	 * if no seats available in Passenger fare class.
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void ConfirmDepTimeLessThenConTime() throws AircraftException, PassengerException {
 		tempFlight.confirmBooking(tempPassenger, airDepartureTime+1);	
 	}
-	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state OR confirmationTime OR departureTime is invalid. See Passenger.confirmSeat(int, int)
+	 * AircraftException - 
+	 * if no seats available in Passenger fare class.
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void ConfirmConTimeLessThenZero() throws AircraftException, PassengerException {
 		tempFlight.confirmBooking(tempPassenger, negativeVal);	
 	}
 	
-	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state OR confirmationTime OR departureTime is invalid. See Passenger.confirmSeat(int, int)
+	 * AircraftException - 
+	 * if no seats available in Passenger fare class.
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void ConfirmFullyBooked() throws AircraftException, PassengerException {
 		fillThePlane();
 		smallFlight.confirmBooking(tempPassenger, confirmationTime);	
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void ConfirmbookingTestCheckingIfFlightEmpty() throws AircraftException, PassengerException {
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
 		assertEquals(tempFlight.flightEmpty(), false);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void ConfirmbookingTestCheckiFBusinessIncreases() throws AircraftException, PassengerException {
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
 		assertEquals(tempFlight.getNumBusiness(), 1);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void ConfirmbookingTestCheckiFFirstIncreases() throws AircraftException, PassengerException {
 		First tempFirst = new First(passBookingTime,passDepartureTime);
@@ -307,6 +498,10 @@ public class A380Tests {
 		assertEquals(tempFlight.getNumFirst(), 1);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void ConfirmbookingTestCheckiFPremIncreases() throws AircraftException, PassengerException {
 		Premium tempPrem = new Premium(passBookingTime,passDepartureTime);
@@ -314,6 +509,10 @@ public class A380Tests {
 		assertEquals(tempFlight.getNumPremium(), 1);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void ConfirmbookingTestCheckiFEconIncreases() throws AircraftException, PassengerException {
 		Economy tempEcon = new Economy(passBookingTime,passDepartureTime);
@@ -321,6 +520,10 @@ public class A380Tests {
 		assertEquals(tempFlight.getNumEonomy(), 1);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void ConfirmbookingTestCheckiFBusinessIncreasesButNothingElse() throws AircraftException, PassengerException {
 		int beforeconFirst = tempFlight.getNumFirst();
@@ -333,6 +536,10 @@ public class A380Tests {
 		assertEquals(tempFlight.getNumPremium(), beforeconPrem);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void ConfirmbookingTestCheckiFFirstIncreasesButNothingElse() throws AircraftException, PassengerException {
 		First tempFirst = new First(passBookingTime,passDepartureTime);
@@ -347,6 +554,10 @@ public class A380Tests {
 	
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void ConfirmbookingTestCheckiFPremIncreasesButNothingElse() throws AircraftException, PassengerException {
 		Premium tempPrem = new Premium(passBookingTime,passDepartureTime);
@@ -360,6 +571,10 @@ public class A380Tests {
 		assertEquals(tempFlight.getNumFirst(), beforeconFirst);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void ConfirmbookingTestCheckiFEconIncreasesButNothingElse() throws AircraftException, PassengerException {
 		Economy tempEcon = new Economy(passBookingTime,passDepartureTime);
@@ -373,6 +588,10 @@ public class A380Tests {
 		assertEquals(tempFlight.getNumFirst(), beforeconFirst);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void ConfirmbookingTestCheckingIfBusinessCountChanged() throws AircraftException, PassengerException {
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
@@ -380,51 +599,81 @@ public class A380Tests {
 		assertEquals(tempFlight.getNumBusiness(),UnchangedFlight.getNumBusiness()+1 );
 	}
 	
-	
-	
-	
-	
-	//Testing constructor by checking class is made and that it is initially empty
+	/**--------- A380: FLIGHTEMPTY TEST ---------**/	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#flightEmpty()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void flightEmptyTests() throws AircraftException, PassengerException {
 		assertEquals(tempFlight.flightEmpty(), true );
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#flightEmpty()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void flightNotEmptyTests() throws AircraftException, PassengerException {
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
 		assertEquals(tempFlight.flightEmpty(), false );
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#flightEmpty()}.
+	 * @throws AircraftException, PassengerException
+	 */
+	@Test
+	public void flightIsFullTestingEmptyTests() throws AircraftException, PassengerException {
+		fillThePlane();
+		assertEquals(smallFlight.flightEmpty(), false );
+	}
 	
+	/**--------- A380: FLIGHTFULL TEST ---------**/	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#flightFull()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void fullPlane() throws AircraftException, PassengerException{
 		fillThePlane();
 		assertEquals(smallFlight.flightFull(), true);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#flightFull()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void NotfullPlane() throws AircraftException, PassengerException{
 		assertEquals(tempFlight.flightFull(), false);
 	}
 		
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#flightFull()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void fullPlaneWithOneBooking() throws AircraftException, PassengerException{
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
 		assertEquals(tempFlight.flightFull(), false);
 	}
 	
-	
-	
-	
-	//Test the fly passengers function
+	/**--------- A380: FLYPASSENGERS TEST ---------**/	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#flyPassengers(int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void flightPassengersTests() throws AircraftException, PassengerException {	
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
 		tempFlight.flyPassengers(flightTime);
 		assertEquals(tempPassenger.isFlown(), true);
 	}
-	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#flyPassengers(int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void flightPassengersOfAllClassesTests() throws AircraftException, PassengerException {	
 		First tempFirst = new First(passBookingTime,passDepartureTime);
@@ -443,7 +692,16 @@ public class A380Tests {
 		
 	}
 	
-	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state See Passenger.flyPassenger(int).
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#flyPassengers(int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void flightPassengersThrowsExceptionOneQueued() throws AircraftException, PassengerException {	
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
@@ -453,6 +711,16 @@ public class A380Tests {
 		tempFlight.flyPassengers(flightTime);
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state See Passenger.flyPassenger(int).
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#flyPassengers(int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void flightPassengersThrowsExceptionOneRefused() throws AircraftException, PassengerException {	
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
@@ -462,6 +730,16 @@ public class A380Tests {
 		tempFlight.flyPassengers(flightTime);
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state See Passenger.flyPassenger(int).
+	 * 
+	 */
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#flyPassengers(int)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test(expected = PassengerException.class)
 	public void flightPassengersThrowsExceptionOneFlown() throws AircraftException, PassengerException {	
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
@@ -472,8 +750,11 @@ public class A380Tests {
 	}
 	
 
-	
-	
+	/**--------- A380: GETBOOKINGS TEST ---------**/	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#getBookings()}.
+	 * @throws AircraftException
+	 */	
 	@Test
 	public void getBookingsTestWithNoBooking() throws AircraftException{
 		assertEquals(tempFlight.getBookings().getNumBusiness(), 0);
@@ -484,6 +765,10 @@ public class A380Tests {
 		assertEquals(tempFlight.getBookings().getAvailable(), 484);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#getBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void getBookingsTestWithOneBookingBusiness() throws AircraftException, PassengerException{
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
@@ -495,6 +780,10 @@ public class A380Tests {
 		assertEquals(tempFlight.getBookings().getAvailable(), 483);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#getBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void getBookingsTestWithOneBookingFirst() throws AircraftException, PassengerException{
 		First tempFirst = new First(passBookingTime,passDepartureTime);
@@ -507,6 +796,10 @@ public class A380Tests {
 		assertEquals(tempFlight.getBookings().getAvailable(), 483);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#getBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void getBookingsTestWithOneBookingPremium() throws AircraftException, PassengerException{
 		Premium tempPrem = new Premium(passBookingTime,passDepartureTime);
@@ -519,6 +812,10 @@ public class A380Tests {
 		assertEquals(tempFlight.getBookings().getAvailable(), 483);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#getBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void getBookingsTestWithOneBookingEconomy() throws AircraftException, PassengerException{
 		Economy tempEco = new Economy(passBookingTime,passDepartureTime);
@@ -531,12 +828,21 @@ public class A380Tests {
 		assertEquals(tempFlight.getBookings().getAvailable(), 483);
 	}
 
+	/**--------- A380: GETPASSENGERS TEST ---------**/	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#getPassengers()}.
+	 * @throws AircraftException, PassengerException
+	 */	
 	@Test
 	public void testPassengerListOnePassenger() throws AircraftException, PassengerException{
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
 		assertEquals(tempFlight.getPassengers().get(0).toString(), tempPassenger.toString());
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#getPassengers()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void testPassengerListTwoPassengers() throws AircraftException, PassengerException{
 		Premium tempPrem = new Premium(passBookingTime,passDepartureTime);
@@ -546,17 +852,30 @@ public class A380Tests {
 		assertEquals(tempFlight.getPassengers().get(0).toString()+tempFlight.getPassengers().get(1).toString(), tempPrem.toString()+tempPassenger.toString());
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#getPassengers()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void testPassengerListNoPassengers() throws AircraftException, PassengerException{
 		assertEquals(tempFlight.getPassengers().isEmpty(), true);
 	}
 	
+	/**--------- A380: HASPASSENGER TEST ---------**/	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#hasPassenger(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */	
 	@Test
 	public void hasPassengerTestWithOnePassengerBusiness() throws AircraftException, PassengerException{
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
 		assertEquals(tempFlight.hasPassenger(tempPassenger),true);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#hasPassenger(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void hasPassengerTestWithOnePassengerFirst() throws AircraftException, PassengerException{
 		First tempFirst = new First(passBookingTime,passDepartureTime);
@@ -564,6 +883,10 @@ public class A380Tests {
 		assertEquals(tempFlight.hasPassenger(tempFirst),true);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#hasPassenger(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void hasPassengerTestWithOnePassengerPremium() throws AircraftException, PassengerException{
 		Premium tempPrem = new Premium(passBookingTime,passDepartureTime);
@@ -571,6 +894,10 @@ public class A380Tests {
 		assertEquals(tempFlight.hasPassenger(tempPrem),true);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#hasPassenger(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void hasPassengerTestWithOnePassengerEconomy() throws AircraftException, PassengerException{
 		Economy tempEcon = new Economy(passBookingTime,passDepartureTime);
@@ -578,11 +905,19 @@ public class A380Tests {
 		assertEquals(tempFlight.hasPassenger(tempEcon),true);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#hasPassenger(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void hasPassengerTestNopassengers() throws AircraftException, PassengerException{
 		assertEquals(tempFlight.hasPassenger(tempPassenger),false);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#hasPassenger(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void hasPassengerTestOnepassengerButNotTheOneWeWantBusiness() throws AircraftException, PassengerException{
 		Business tempBusiness = new Business(passBookingTime,passDepartureTime);
@@ -590,6 +925,10 @@ public class A380Tests {
 		assertEquals(tempFlight.hasPassenger(tempPassenger),false);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#hasPassenger(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void hasPassengerTestOnepassengerButNotTheOneWeWantFirst() throws AircraftException, PassengerException{
 		First tempFirstOne = new First(passBookingTime,passDepartureTime);
@@ -598,6 +937,10 @@ public class A380Tests {
 		assertEquals(tempFlight.hasPassenger(tempFirstTwo),false);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#hasPassenger(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void hasPassengerTestOnepassengerButNotTheOneWeWantPremium() throws AircraftException, PassengerException{
 		Premium tempPremOne = new Premium(passBookingTime,passDepartureTime);
@@ -606,6 +949,10 @@ public class A380Tests {
 		assertEquals(tempFlight.hasPassenger(tempPremTwo),false);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#hasPassenger(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void hasPassengerTestOnepassengerButNotTheOneWeWantEconomy() throws AircraftException, PassengerException{
 		Economy tempEconOne = new Economy(passBookingTime,passDepartureTime);
@@ -615,18 +962,30 @@ public class A380Tests {
 	}
 
 	
-	//Tests for seats available
+	/**--------- A380: SEATSAVAILABLE TEST ---------**/	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#seatsAvailable(Passenger)}.
+	 * @throws AircraftException,PassengerException
+	 */
 	@Test
 	public void seatsAvailableEmptyPlaneTest(){
 		assertEquals(tempFlight.seatsAvailable(tempPassenger),true);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#seatsAvailable(Passenger)}.
+	 * @throws AircraftException,PassengerException
+	 */
 	@Test
 	public void seatsAvailableFullPlaneTestTryAndSitBusiness() throws AircraftException, PassengerException{
 		fillThePlane();
 		assertEquals(smallFlight.seatsAvailable(tempPassenger),false);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#seatsAvailable(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void seatsAvailableFullPlaneTestTryAndSitFirst() throws AircraftException, PassengerException{
 		fillThePlane();
@@ -634,6 +993,10 @@ public class A380Tests {
 		assertEquals(smallFlight.seatsAvailable(tempFirst),false);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#seatsAvailable(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void seatsAvailableFullPlaneTestTryAndSitPremium() throws AircraftException, PassengerException{
 		fillThePlane();
@@ -641,19 +1004,32 @@ public class A380Tests {
 		assertEquals(smallFlight.seatsAvailable(tempPrem),false);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#seatsAvailable(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void seatsAvailableFullPlaneTestTryAndSitEcon() throws AircraftException, PassengerException{
 		fillThePlane();
 		Economy tempEcon = new Economy(passBookingTime,passDepartureTime);
 		assertEquals(smallFlight.seatsAvailable(tempEcon),false);
 	}
+	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#seatsAvailable(Passenger)}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void seatsAvailableOneCustomerAddedTest() throws AircraftException, PassengerException{
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
 		assertEquals(tempFlight.seatsAvailable(tempPassenger),true);
 	}
 	
-	
+	/**--------- A380: UPGRADEBOOKINGS TEST ---------**/	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#upgradeBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void upgradeBookingsSingleBusiness() throws AircraftException, PassengerException{
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
@@ -661,6 +1037,10 @@ public class A380Tests {
 		assertTrue(tempFlight.getPassengers().get(0) instanceof First);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#upgradeBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void upgradeBookingsEconomy() throws AircraftException, PassengerException{
 		Economy tempEcon = new Economy(passBookingTime,passDepartureTime);
@@ -669,6 +1049,10 @@ public class A380Tests {
 		assertTrue(tempFlight.getPassengers().get(0) instanceof Premium);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#upgradeBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void upgradeBookingsPremium() throws AircraftException, PassengerException{
 		Premium tempPrem = new Premium(passBookingTime,passDepartureTime);
@@ -677,6 +1061,10 @@ public class A380Tests {
 		assertTrue(tempFlight.getPassengers().get(0) instanceof Business);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#upgradeBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void upgradeBookingsFirst() throws AircraftException, PassengerException{
 		First tempFirst = new First(passBookingTime,passDepartureTime);
@@ -685,6 +1073,10 @@ public class A380Tests {
 		assertTrue(tempFlight.getPassengers().get(0) instanceof First);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#upgradeBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void upgradeBookingsBusinessFirst() throws AircraftException, PassengerException{
 		First tempFirst = new First(passBookingTime,passDepartureTime);
@@ -695,6 +1087,10 @@ public class A380Tests {
 		assertTrue(tempFlight.getPassengers().get(1) instanceof First);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#upgradeBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void upgradeBookingsBusinessEconomy() throws AircraftException, PassengerException{
 		Economy tempEcon = new Economy(passBookingTime,passDepartureTime);
@@ -705,6 +1101,10 @@ public class A380Tests {
 		assertTrue(tempFlight.getPassengers().get(1) instanceof First);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#upgradeBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void upgradeBookingsBusinessPremium() throws AircraftException, PassengerException{
 		Premium tempPrem = new Premium(passBookingTime,passDepartureTime);
@@ -715,6 +1115,10 @@ public class A380Tests {
 		assertTrue(tempFlight.getPassengers().get(1) instanceof First);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#upgradeBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void upgradeBookingsBusinessBusiness() throws AircraftException, PassengerException{
 		Business tempBusiness = new Business(passBookingTime,passDepartureTime);
@@ -725,6 +1129,10 @@ public class A380Tests {
 		assertTrue(tempFlight.getPassengers().get(1) instanceof First);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#upgradeBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void upgradeBookingsBusinessWhenFirstIsFull() throws AircraftException, PassengerException{
 		A380 testFlight = new A380(airCode,airDepartureTime, numberOne, numberOne+1, numberOne,numberOne);
@@ -736,6 +1144,10 @@ public class A380Tests {
 		assertTrue(testFlight.getPassengers().get(1) instanceof Business);
 	}
 	
+	/**
+	 * Test method for {@link asgn2Aircraft.A380#upgradeBookings()}.
+	 * @throws AircraftException, PassengerException
+	 */
 	@Test
 	public void upgradeBookingsBusinessWhenFirstIsFullThenWithMoreBusiness() throws AircraftException, PassengerException{
 		A380 testFlight = new A380(airCode,airDepartureTime, 3*numberOne, 3*numberOne, 3*numberOne,3*numberOne);
@@ -763,7 +1175,9 @@ public class A380Tests {
 	}
 	
 	
-	
+	/**
+	 * Private helper method to make create a small plane that is full
+	 */
 	private void fillThePlane() throws AircraftException, PassengerException{
 		smallFlight = new A380(airCode,airDepartureTime,numberOne,numberOne,numberOne,numberOne);
 		Economy tempEcon = new Economy(passBookingTime,passDepartureTime);

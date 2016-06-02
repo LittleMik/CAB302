@@ -96,16 +96,19 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private ChartPanel chartPanel1;
 	private ChartPanel chartPanel2;
 	private ChartPanel activeChartPanel;
+	
+	private String[] args;
 	/**
 	 * @param arg0
 	 * @throws HeadlessException
 	 */
-	public GUISimulator(String arg0) throws HeadlessException {
+	public GUISimulator(String arg0, String[]args) throws HeadlessException {
 		super(arg0);
+		this.args = args;
 		// TODO Auto-generated constructor stub
 	}	
 	
-	private void createGUI(){
+	private void createGUI(String[]args){
 		/** GUI Main Setup **/
 		setSize(800, 800);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -271,6 +274,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    txtInputCancellation = new JTextField(10);
 	    
 	    //Default Inputs
+	    if(args.length < 9){
 	    txtInputFirst.setText("" + Constants.DEFAULT_FIRST_PROB);
 	    txtInputBusiness.setText("" + Constants.DEFAULT_BUSINESS_PROB);
 	    txtInputEconomy.setText("" + Constants.DEFAULT_ECONOMY_PROB);
@@ -280,6 +284,16 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    txtInputMean.setText("" + Constants.DEFAULT_DAILY_BOOKING_MEAN);
 	    txtInputQsize.setText("" + Constants.DEFAULT_MAX_QUEUE_SIZE);
 	    txtInputCancellation.setText("" + Constants.DEFAULT_CANCELLATION_PROB);
+	    }else{
+	    	txtInputRng.setText("" + args[0]);
+	    	txtInputQsize.setText("" + args[1]);
+	    	txtInputMean.setText("" + args[2]);
+	    	txtInputFirst.setText("" + args[4]);
+	    	txtInputBusiness.setText("" + args[5]);
+	    	txtInputPremium.setText("" + args[6]);
+	    	txtInputEconomy.setText("" + args[7]);
+	    	txtInputCancellation.setText("" + args[8]);
+	    }
 	    
 	    /** **/
 	    
@@ -401,7 +415,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		createGUI();
+		createGUI(this.args);
 	}
 
 	/**
@@ -409,7 +423,7 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 */
 	public static void main(String[] args) {
 		JFrame.setDefaultLookAndFeelDecorated(true);
-        SwingUtilities.invokeLater(new GUISimulator("Aircraft Simulator"));
+        SwingUtilities.invokeLater(new GUISimulator("Aircraft Simulator", args));
 
 	}
 
