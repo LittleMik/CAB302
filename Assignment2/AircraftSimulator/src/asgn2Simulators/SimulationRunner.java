@@ -212,9 +212,11 @@ public class SimulationRunner {
 			boolean flying = (time >= Constants.FIRST_FLIGHT);
 			outPutString = outPutString + sim.getSummary(time, flying);
 		}
+		//finalise log
 		this.sim.finaliseQueuedAndCancelledPassengers(Constants.DURATION); 
 		this.log.logQREntries(Constants.DURATION, sim);
 		this.log.finalise(this.sim);
+		//finalise output string
 		String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 		outPutString = outPutString + "\n" + time + ": End of Simulation\n";
 		outPutString = outPutString + sim.finalState();		
