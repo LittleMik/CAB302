@@ -39,12 +39,22 @@ public class SimulationRunner {
 		final int NUM_ARGS = 9; 
 		Simulator s = null; 
 		Log l = null; 
+		if(args.length == 1){
+			if(!((args[0].contains("-gui"))||(args[0].contains("-nogui")))){
+				printErrorAndExitNoGui();
+			}
+		}
 		if(args.length == 10){
 			if(args[9].contains("-gui")){
 				GUISimulator gui = new GUISimulator("Assignment2");
 				gui.run();
+			}else if(args[9].contains("-nogui")){
+				
+			}else{
+				printErrorAndExitNoGui();
 			}
 		}
+		
 		if((args.length == 1 && args[0].contains("-gui"))||(args.length == 9)||(args.length == 0)){
 			GUISimulator gui = new GUISimulator("Assignment2");
 			gui.run();
@@ -122,7 +132,12 @@ public class SimulationRunner {
 		System.err.println(str);
 		System.exit(-1);
 	}
-	
+
+	private static void printErrorAndExitNoGui() {
+		String str = "please state if you want the gui or not. Or enter all parameters";
+		System.err.println(str);
+		System.exit(-1);
+	}
 	
 	private Simulator sim;
 	private Log log;
