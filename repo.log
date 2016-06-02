@@ -1,0 +1,460 @@
+*   f98b37b : Merge branch 'master' of https://github.com/LittleMik/CAB302
+|\  
+| * cf1895d : more command line stuff :'(
+| * c8e0591 : commandline check again -_-
+* | c3947ad : Extra formatting additions
+|/  
+* 3dd66c1 : Added Statement
+* e76de1b : Updated Method Comments and Removed Warnings
+* 7c77482 : Comment-ified Aircraft Class
+* 87c59ff : Added instanceof testing to passenger tests
+* 29b9089 : add the command line check as to if we run the gui or not
+* 33f0206 : update gui tests
+*   355793c : command line stuff
+|\  
+| * 76a3568 : Converted charts to ChartPanel Class and updated series colours
+* | 991cd2e : command line stuff
+|/  
+* 15010d5 : update error testing in gui
+* ec5fab7 : Git Fix Charts
+* 44cd51a : cast to chart 1
+* 982b45c : Modified GUI to fit charts, added btnSwitch for chart toggle, changed chart2 to XY chart version
+* c869b29 : added gui tests
+* f0e1f6c : fixed bug in update bookings
+* 9dc06fe : Git Fix
+* 8f9d398 : should be fixed
+* 5824734 : still fixing
+* 5aa66f6 : st
+* 20d662e : trying to fix it
+* f63aca0 : added code to set values to default if empty
+* 092da47 : added code to set values to default if empty
+* a9a8dc8 : Added Bar Chart Prototype
+* 7f7a04a : gui simulation working
+* b198d29 : Added JFreeChart lib files
+* 44f8ccb : Simplified upgradeBookings
+* cfd9902 : Updated Domain Range
+* c755e9b : Added Chart class with a prototype Chart1 called via GUISimulator, dataset created in SimulationRunner. Also added default values for the textboxes using the constants class
+* 6e00f65 : gui simulation working
+* 0695771 : Added WasConfirmed and WasQueued tests
+* c81a5fc : upadate upgrade bookings
+* 890d3b0 : upadate test
+* e6e90ac : updated upgrad method
+* 0b6821c : update tests
+* 3e76dbe : Updated upgradeBookings method
+* a734173 : Added Passenger state transition tests
+* fdd9254 : Aircraft Class: Removed exception from upgradeBookings and finished the method with a temporary solution, added comments, fixed error in flightFull method
+* f3ffc92 : Updated Simulators Package
+* 6a69591 : Updated JavaDoc
+* ec0fc2f : surely this time
+* f492c12 : Add files via upload
+* 64e5c16 : Added confirmSeat and cancelSeat methods to aircraft class and created a method to retrieve a passenger number index for seat checking via hashmap
+* 9c31c9e : Confirm and Cancel method fixes with cancelBookingTest assertion fix
+* 59dacfb : Private method fillPlane updated with passenger class capacity constants
+* 3916bdc : Add files via upload
+* 7fdde5b : Update bin Files - not sure if these are important
+* 8056040 : Setup constructors & finished some setters and getters
+*   68eae79 : Merge branch 'master' of https://github.com/LittleMik/CAB302
+|\  
+| *   202fdae : Merge pull request #1 from LittleMik/Memees-patch-1
+| |\  
+| | * a5acef6 : edit with passengers code
+| |/  
+* | e951d41 : Added Contructor Tests and Updated Formatting
+* | 2a1acd0 : New Documentation
+|/  
+* 78521b0 : Added upgrade method tests for all passenger classes
+* 13e815b : Removed incorrect initial commit
+* a85ff9b : Setup Passengers Tests
+* dfc163d : Add initial version
+* 90da20c : Testing git stuff
+* 3bcae98 : Assignment release commit
+* 994157b : Initial commitcommit f98b37b060a05cd402c2053dc49cea80e61785e6
+Merge: c3947ad cf1895d
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Thu Jun 2 15:23:44 2016 +1000
+
+    Merge branch 'master' of https://github.com/LittleMik/CAB302
+
+commit c3947ad6a63fa4d070e5d197ee9f1e73c6fd83e8
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Thu Jun 2 15:13:05 2016 +1000
+
+    Extra formatting additions
+
+commit cf1895db4d43902fde242c923b29e72b39492eaf
+Author: Memees <jhaye911@gmail.com>
+Date:   Thu Jun 2 13:57:41 2016 +1000
+
+    more command line stuff :'(
+
+commit c8e059178281af1deb348acd22c50cf1b54b3267
+Author: Memees <jhaye911@gmail.com>
+Date:   Thu Jun 2 12:58:58 2016 +1000
+
+    commandline check again -_-
+
+commit 3dd66c17d4554ec48545ebc100860eafa8ceb9a1
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Thu Jun 2 12:51:08 2016 +1000
+
+    Added Statement
+
+commit e76de1b718e5fd72a6a692604bb2075abb0110ee
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Thu Jun 2 12:34:07 2016 +1000
+
+    Updated Method Comments and Removed Warnings
+
+commit 7c77482dc144fd7f3301ae692a31c35e0ec57983
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Thu Jun 2 12:19:23 2016 +1000
+
+    Comment-ified Aircraft Class
+
+commit 87c59ff81ce4232c54fb0fae10c66e5e3183b6e9
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Thu Jun 2 11:53:55 2016 +1000
+
+    Added instanceof testing to passenger tests
+
+commit 29b90892b37782000b8e5c833ba377ad6698101e
+Author: Memees <jhaye911@gmail.com>
+Date:   Thu Jun 2 10:21:40 2016 +1000
+
+    add the command line check as to if we run the gui or not
+
+commit 33f02062ccbcd4478370788d1025cf90ca3c29e7
+Author: Memees <jhaye911@gmail.com>
+Date:   Wed Jun 1 20:59:57 2016 +1000
+
+    update gui tests
+
+commit 355793c9b9244f7ac43c2fc8ed79cfb213e6216a
+Merge: 991cd2e 76a3568
+Author: Memees <jhaye911@gmail.com>
+Date:   Wed Jun 1 17:21:03 2016 +1000
+
+    command line stuff
+
+commit 991cd2e431f9a29b561951b46378dd4b3626d197
+Author: Memees <jhaye911@gmail.com>
+Date:   Wed Jun 1 17:20:31 2016 +1000
+
+    command line stuff
+
+commit 76a356835cf012f86e4cfcc7b9ab5bc132dafb1d
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Wed Jun 1 17:12:54 2016 +1000
+
+    Converted charts to ChartPanel Class and updated series colours
+
+commit 15010d5cdcb932c03cfa95e158c284b39c27c865
+Author: Memees <jhaye911@gmail.com>
+Date:   Wed Jun 1 15:37:20 2016 +1000
+
+    update error testing in gui
+
+commit ec5fab77b9273c944e583fc847557928cd71f9ce
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Wed Jun 1 13:45:52 2016 +1000
+
+    Git Fix Charts
+
+commit 44cd51ad53d66c5abb8c5e85e83fd0d584b8e579
+Author: Memees <jhaye911@gmail.com>
+Date:   Wed Jun 1 12:41:00 2016 +1000
+
+    cast to chart 1
+
+commit 982b45c401587768235ed77dddc4c40ce44ba607
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Tue May 31 18:05:23 2016 +1000
+
+    Modified GUI to fit charts, added btnSwitch for chart toggle, changed chart2 to XY chart version
+
+commit c869b2950245deef010fbc4412ae861d8de97548
+Author: Memees <jhaye911@gmail.com>
+Date:   Tue May 31 11:07:19 2016 +1000
+
+    added gui tests
+
+commit f0e1f6cfeb0e9fc4f5f78e8c0985d246db2db064
+Author: Memees <jhaye911@gmail.com>
+Date:   Tue May 31 00:42:43 2016 +1000
+
+    fixed bug in update bookings
+
+commit 9dc06fedf15dd69c8688f2f8ef422073c02c2f09
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Mon May 30 18:03:13 2016 +1000
+
+    Git Fix
+
+commit 8f9d398ca6bc7f75ebf8021f4490a580f1502431
+Author: Josh Hayes <jhaye911@gmail.com>
+Date:   Mon May 30 17:44:13 2016 +1000
+
+    should be fixed
+
+commit 5824734efd6b6a4f2e49dcc36fd0f91f13c92a07
+Author: Josh Hayes <jhaye911@gmail.com>
+Date:   Mon May 30 17:43:05 2016 +1000
+
+    still fixing
+
+commit 5aa66f60219246e3548163ff2c29f1ff6057be93
+Author: Josh Hayes <jhaye911@gmail.com>
+Date:   Mon May 30 17:42:06 2016 +1000
+
+    st
+
+commit 20d662e3f8786a797e57eaf0fd0ac0252f00ad04
+Author: Josh Hayes <jhaye911@gmail.com>
+Date:   Mon May 30 17:38:15 2016 +1000
+
+    trying to fix it
+
+commit f63aca0170a5906306a292a47d4b1519abb4174b
+Author: Memees <jhaye911@gmail.com>
+Date:   Mon May 30 17:24:38 2016 +1000
+
+    added code to set values to default if empty
+
+commit 092da47da62fc595384354b1c6d35506f072be6e
+Author: Memees <jhaye911@gmail.com>
+Date:   Mon May 30 17:15:50 2016 +1000
+
+    added code to set values to default if empty
+
+commit a9a8dc85148f649278e045db7b8d1bd7586360e6
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Mon May 30 02:31:58 2016 +1000
+
+    Added Bar Chart Prototype
+
+commit 7f7a04ac0cd47ca4ea14f3ad8f019aa3a3e6058b
+Author: Memees <jhaye911@gmail.com>
+Date:   Mon May 30 00:09:58 2016 +1000
+
+    gui simulation working
+
+commit b198d296bd1bafd67d1832d4635726941bf73927
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Sun May 29 22:36:22 2016 +1000
+
+    Added JFreeChart lib files
+
+commit 44f8ccb00dade7dde494eab11e2fc34fcbc67e8a
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Sun May 29 18:20:38 2016 +1000
+
+    Simplified upgradeBookings
+
+commit cfd99022e7e75374c5b5df5fe53b8cb86c090b89
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Sun May 29 17:38:51 2016 +1000
+
+    Updated Domain Range
+
+commit c755e9bf557c3d4c0e0acfb1ef1a067fe3e72c94
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Sun May 29 17:19:08 2016 +1000
+
+    Added Chart class with a prototype Chart1 called via GUISimulator, dataset created in SimulationRunner. Also added default values for the textboxes using the constants class
+
+commit 6e00f65f318f7cc00a7abc226092505f5710d926
+Author: Memees <jhaye911@gmail.com>
+Date:   Sun May 29 11:07:39 2016 +1000
+
+    gui simulation working
+
+commit 0695771857ec895590a388897e0ad7bb118ad76e
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Fri May 27 17:23:54 2016 +1000
+
+    Added WasConfirmed and WasQueued tests
+
+commit c81a5fc9653d42e5de7fdced15ea71d8d27eee05
+Author: Memees <jhaye911@gmail.com>
+Date:   Fri May 27 14:31:00 2016 +1000
+
+    upadate upgrade bookings
+
+commit 890d3b0fb10e7402d7d189e7782f9a42c001c2b5
+Author: Memees <jhaye911@gmail.com>
+Date:   Fri May 27 13:00:29 2016 +1000
+
+    upadate test
+
+commit e6e90acaf6a3aeaa8526434671238b816d223495
+Author: Josh Hayes <jhaye911@gmail.com>
+Date:   Fri May 27 12:47:55 2016 +1000
+
+    updated upgrad method
+
+commit 0b6821cc7f149c91225de9f843c0c2c8c993736e
+Author: Josh Hayes <jhaye911@gmail.com>
+Date:   Fri May 27 12:46:47 2016 +1000
+
+    update tests
+
+commit 3e76dbe2b9e22832778385bbf9f064ec48261dbb
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Fri May 27 02:02:52 2016 +1000
+
+    Updated upgradeBookings method
+
+commit a73417396e507ffb0dd517d55d8c3f14ad88e1e7
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Fri May 27 01:59:19 2016 +1000
+
+    Added Passenger state transition tests
+
+commit fdd9254e7fc4c1009a603ca662a1bd2ace03e4b0
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Wed May 25 16:04:05 2016 +1000
+
+    Aircraft Class: Removed exception from upgradeBookings and finished the method with a temporary solution, added comments, fixed error in flightFull method
+
+commit f3ffc929f460440028c85825998219024e2ffab7
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Wed May 25 12:44:37 2016 +1000
+
+    Updated Simulators Package
+
+commit 6a69591ccab2d3aa83e73d1d7a6a267357105145
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Wed May 25 12:43:45 2016 +1000
+
+    Updated JavaDoc
+
+commit ec0fc2f1aa92956b399dec7bfb32c6a74a464afe
+Author: Memees <jhaye911@gmail.com>
+Date:   Mon May 23 15:36:04 2016 +1000
+
+    surely this time
+
+commit f492c12e05c630887442d80a39006718e5f8beb0
+Author: Josh Hayes <jhaye911@gmail.com>
+Date:   Mon May 23 14:48:55 2016 +1000
+
+    Add files via upload
+    
+    updated tests after rework of confirm and deleting booking
+
+commit 64e5c161d98c8d2ac2d71fa7411b6cbe79d637a0
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Fri May 20 23:00:53 2016 +1000
+
+    Added confirmSeat and cancelSeat methods to aircraft class and created a method to retrieve a passenger number index for seat checking via hashmap
+
+commit 9c31c9e18d4cdf25a7f9bb8fd79fb151f6515cb0
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Fri May 20 02:29:47 2016 +1000
+
+    Confirm and Cancel method fixes with cancelBookingTest assertion fix
+
+commit 59dacfb407bb8c01d725f7cf4acb98645f484ccd
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Thu May 19 23:01:14 2016 +1000
+
+    Private method fillPlane updated with passenger class capacity constants
+
+commit 3916bdcb933bfc344de863a735f47e00b7160a02
+Author: Josh Hayes <jhaye911@gmail.com>
+Date:   Wed May 18 14:13:00 2016 +1000
+
+    Add files via upload
+    
+    So, couple of things.... First is in aircrafts I dont think that the aircraft full and aircraft empty are wrong. See the comments I have in the aircraft tests file. I have started testing the aircrafts but still more to come
+
+commit 7fdde5b3af00491c855e98eb5244da5812ca0a0e
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Fri May 13 03:15:39 2016 +1000
+
+    Update bin Files - not sure if these are important
+
+commit 80560408d35f8e89baee4276fe6f588ecf90c8c9
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Fri May 13 03:14:10 2016 +1000
+
+    Setup constructors & finished some setters and getters
+
+commit 68eae794649d956cee023a9fb9b51e5843effa6d
+Merge: e951d41 202fdae
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Fri May 13 01:13:26 2016 +1000
+
+    Merge branch 'master' of https://github.com/LittleMik/CAB302
+
+commit e951d41f287e0307c1c8bd066e75d384b8a9c1ba
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Fri May 13 01:11:12 2016 +1000
+
+    Added Contructor Tests and Updated Formatting
+
+commit 2a1acd0aa52b4f53881a8e4c84f7131ec3a6febb
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Fri May 13 01:08:44 2016 +1000
+
+    New Documentation
+
+commit 202fdaea8e3c25f3d2a5bbd238b7673ba9ca81e8
+Merge: 78521b0 a5acef6
+Author: Mike Smallcombe <LittleMik@users.noreply.github.com>
+Date:   Thu May 12 23:06:08 2016 +1000
+
+    Merge pull request #1 from LittleMik/Memees-patch-1
+    
+    edit with passengers code
+
+commit a5acef6171006398ed0230d0501678d42af2af09
+Author: Josh Hayes <jhaye911@gmail.com>
+Date:   Thu May 12 22:09:34 2016 +1000
+
+    edit with passengers code
+    
+    Think I uploaded way too many files.....
+    But I have added all of the code needed for the passengers class.
+
+commit 78521b0ebaac4588292e7483ad857d57e585b206
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Wed May 11 17:52:04 2016 +1000
+
+    Added upgrade method tests for all passenger classes
+
+commit 13e815bc47b0be5be8539fdaacdab5056adc7840
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Tue May 10 14:50:58 2016 +1000
+
+    Removed incorrect initial commit
+
+commit a85ff9bbf02479f720157830c8789953102ef5b4
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Tue May 10 14:39:08 2016 +1000
+
+    Setup Passengers Tests
+
+commit dfc163d855151963bc10499acbcff60076f3bd6d
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Tue May 10 13:38:34 2016 +1000
+
+    Add initial version
+
+commit 90da20c0a784a02b23234557bec45a951087d156
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Tue May 10 12:57:58 2016 +1000
+
+    Testing git stuff
+
+commit 3bcae98ba44cab9c8b14907b00a2f70b81c57e59
+Author: Michael Smallcombe <michael.smallcombe@gmail.com>
+Date:   Tue May 10 12:46:59 2016 +1000
+
+    Assignment release commit
+
+commit 994157b00938a6581990a4077496abe4d199a514
+Author: Mike Small <LittleMik@users.noreply.github.com>
+Date:   Mon May 9 02:26:40 2016 +1000
+
+    Initial commit
