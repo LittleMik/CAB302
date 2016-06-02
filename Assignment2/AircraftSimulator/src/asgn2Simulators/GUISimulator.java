@@ -6,36 +6,24 @@
  */
 package asgn2Simulators;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import javax.swing.border.Border;
 
 import org.jfree.data.xy.XYSeriesCollection;
 import asgn2Aircraft.AircraftException;
 import asgn2Passengers.PassengerException;
 
+
 /**
+ * The <code>GUISimulator</code> class is used to display 
+ * the AircraftSimulator GUI, outputting data collected from 
+ * the <code>SimulationRunner</code> class
  * @author hogan
  *
  */
@@ -98,14 +86,16 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	private ChartPanel activeChartPanel;
 	
 	private String[] args;
+	
 	/**
-	 * @param arg0
+	 * GUISimulator constructor
+	 * @param <code>String</code> - arg0
+	 * @param <code>String</code> - args
 	 * @throws HeadlessException
 	 */
 	public GUISimulator(String arg0, String[]args) throws HeadlessException {
 		super(arg0);
 		this.args = args;
-		// TODO Auto-generated constructor stub
 	}	
 	
 	private void createGUI(String[]args){
@@ -116,7 +106,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    setResizable(false);
 	    
 	    /** Panels **/
-	    //Solution code uses different colours to highlight different panels 
 	    //Setup Panels
 	    pnlOne = createPanel(Color.lightGray);
 	    pnlTwo = createPanel(Color.lightGray);
@@ -275,15 +264,15 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    
 	    //Default Inputs
 	    if(args.length < 9){
-	    txtInputFirst.setText("" + Constants.DEFAULT_FIRST_PROB);
-	    txtInputBusiness.setText("" + Constants.DEFAULT_BUSINESS_PROB);
-	    txtInputEconomy.setText("" + Constants.DEFAULT_ECONOMY_PROB);
-	    txtInputPremium.setText("" + Constants.DEFAULT_PREMIUM_PROB);
-	    
-	    txtInputRng.setText("" + Constants.DEFAULT_SEED);
-	    txtInputMean.setText("" + Constants.DEFAULT_DAILY_BOOKING_MEAN);
-	    txtInputQsize.setText("" + Constants.DEFAULT_MAX_QUEUE_SIZE);
-	    txtInputCancellation.setText("" + Constants.DEFAULT_CANCELLATION_PROB);
+		    txtInputFirst.setText("" + Constants.DEFAULT_FIRST_PROB);
+		    txtInputBusiness.setText("" + Constants.DEFAULT_BUSINESS_PROB);
+		    txtInputEconomy.setText("" + Constants.DEFAULT_ECONOMY_PROB);
+		    txtInputPremium.setText("" + Constants.DEFAULT_PREMIUM_PROB);
+		    
+		    txtInputRng.setText("" + Constants.DEFAULT_SEED);
+		    txtInputMean.setText("" + Constants.DEFAULT_DAILY_BOOKING_MEAN);
+		    txtInputQsize.setText("" + Constants.DEFAULT_MAX_QUEUE_SIZE);
+		    txtInputCancellation.setText("" + Constants.DEFAULT_CANCELLATION_PROB);
 	    }else{
 	    	txtInputRng.setText("" + args[0]);
 	    	txtInputQsize.setText("" + args[1]);
@@ -294,12 +283,11 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    	txtInputEconomy.setText("" + args[7]);
 	    	txtInputCancellation.setText("" + args[8]);
 	    }
-	    
-	    /** **/
-	    
-	    
+	    	    
+	    //Layout Buttons
 	    layoutButtonPanel();
 	    
+	    /** Grid Setup **/
 	    c.gridx = 0;
 	    c.gridy = 0;
 	    pnlFive.add(txtFareClasses, c);
@@ -317,7 +305,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    pnlFive.add(txtPremium, c);
 	    c.gridy++;
 	    pnlFive.add(txtEconomy, c);
-	    
 	    
 	    c.gridx = 1;
 	    c.gridy = 4;
@@ -347,7 +334,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    c2.gridy++;
 	    pnlThree.add(txtCancellation, c2);
 	    
-	    
 	    c2.gridx = 1;
 	    c2.gridy = 4;
 	    pnlThree.add(txtInputRng, c2);
@@ -358,18 +344,27 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    c2.gridy++;
 	    pnlThree.add(txtInputCancellation, c2);
 	    
-	    
-	   
+	    //Add Panels to GUI
 	    this.getContentPane().add(pnlOne,BorderLayout.NORTH);
-	   // this.getContentPane().add(pnlFour,BorderLayout.LINE_START);
 	    this.getContentPane().add(pnlTwo,BorderLayout.EAST);
 	    this.getContentPane().add(pnlThree,BorderLayout.WEST);
 	    this.getContentPane().add(pnlFive,BorderLayout.CENTER);
+	    //Refresh and output
 	    repaint(); 
 	    this.setVisible(true);
 	    resetBorders();
 	}
 	
+	/**
+	 * Add a component to the panel
+	 * @param <code>JPanel</code> - jp panel to add to
+	 * @param <code>Component</code> - c component to add
+	 * @param <code>GridBagConstraints</code> - constraints to add upon adding
+	 * @param <code>int</code> - x value for setting grid x
+	 * @param <code>int</code> - y value for setting grid y
+	 * @param <code>int</code> - w value for setting grid width
+	 * @param <code>int</code> - h value for setting grid height
+	 */
 	private void addToPanel(JPanel jp,Component c, GridBagConstraints constraints, int x, int y, int w, int h) {  
 	      constraints.gridx = x;
 	      constraints.gridy = y;
@@ -377,23 +372,34 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	      constraints.gridheight = h;
 	      jp.add(c, constraints);
 	   }
-
+	
+	/**
+	 * Create a Panel
+	 * @param <code>Color</code> c - containing desired background colour
+	 * @return <code>JPanel</code> new panel to return
+	 */
 	private JPanel createPanel(Color c) {
 		JPanel jp = new JPanel();
 		jp.setBackground(c);
 		return jp;
 	}
 	
+	/**
+	 * Create a Button
+	 * @param <code>String</code> str containing button text
+	 * @return <code>JButton</code> new button to return
+	 */
 	private JButton createButton(String str) {
 		JButton jb = new JButton(str); 
 		jb.addActionListener(this);
 		return jb; 
 	}
 	
+	/**
+	 * Layout the button panel
+	 */
 	private void layoutButtonPanel(){
-	    //add components to grid
-	   
-	    
+	    //Add components to grid	    
 	    GridBagConstraints buttons = new GridBagConstraints(); 
 
 	    //Defaults
@@ -402,9 +408,12 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    buttons.weightx = 300;
 	    buttons.weighty = 300;
 	    
+	    //Add Components to panel with constraints
 	    addToPanel(pnlTwo, btnRun , buttons,0,0,2,1);
 	    addToPanel(pnlTwo, btnShow , buttons,0,2,2,1);
 	    addToPanel(pnlTwo, btnSwitch, buttons,0,4,2,1);
+	    
+	    //Set button default states
 	    btnShow.setEnabled(false);
 	    btnSwitch.setEnabled(false);
 	}
@@ -414,19 +423,21 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 */
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		createGUI(this.args);
 	}
 
 	/**
-	 * @param args
+	 * Main method
+	 * @param <code>String</code> args
 	 */
 	public static void main(String[] args) {
 		JFrame.setDefaultLookAndFeelDecorated(true);
         SwingUtilities.invokeLater(new GUISimulator("Aircraft Simulator", args));
-
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed()
+	 */
 	@Override
 	public void actionPerformed(ActionEvent c) {
 		Object src=c.getSource(); 
@@ -435,33 +446,36 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		Simulator s = null;
 		//Consider the alternatives - not all active at once. 
 		resetBorders();
+		
+		//Check Button Run Press
 		if (src== btnRun) {
 			fillInTheBlanks();
 			if(checkSimulation()&& checkProbs()){
-				 try {
+				try {
 					l = new Log();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
+					//Output Error
 					e1.printStackTrace();
 				} 
 				try { 
-					
 					 s = new Simulator(Integer.parseInt(txtInputRng.getText()),Integer.parseInt(txtInputQsize.getText()),Double.parseDouble(txtInputMean.getText()),0.33*Double.parseDouble(txtInputMean.getText()),Double.parseDouble(txtInputFirst.getText()),Double.parseDouble(txtInputBusiness.getText()),Double.parseDouble(txtInputPremium.getText()),Double.parseDouble(txtInputEconomy.getText()),Double.parseDouble(txtInputCancellation.getText()));
 				} catch (NumberFormatException | SimulationException e) {
-					// TODO Auto-generated catch block
+					//Output Error
 					e.printStackTrace();
 				}
-				 SimulationRunner runSIm = new SimulationRunner(s, l);
-				 try {
+				SimulationRunner runSIm = new SimulationRunner(s, l);
+				try {
 					runSIm.runSimulation(this);
 				} catch (AircraftException | PassengerException | SimulationException | IOException e) {
-					// TODO Auto-generated catch block
+					//Output Error
 					e.printStackTrace();
 				}
-				 btnShow.setEnabled(true);
-				 
+				
+				//Enable Show Button
+				btnShow.setEnabled(true);	 
 			}
-			
+		
+		//Check Button Show Press
 		}else if(src == btnShow){
 			/*
 			 * Toggle Graph Display
@@ -496,6 +510,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 			//Refresh Contents
 			this.revalidate();
 			this.repaint();
+			
+		//Check Button Switch Press
 		}else if(src == btnSwitch){
 			/*
 			 * Toggle Active Chart
@@ -540,7 +556,11 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		}
 		activeChartPanel = new ChartPanel();
 	}
-
+	
+	/**
+	 * Check Simulation for Errors
+	 * @return <code>boolean</code> - (true) if the simulation contained no errors, (false) if errors were detected
+	 */
 	private boolean checkSimulation(){ 
 		try{
 			 if(Integer.parseInt(txtInputRng.getText()) < 0){
@@ -645,6 +665,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 return true;		
 	}
 	
+	/**
+	 * Reset borders of the input fields
+	 */
 	private void resetBorders(){
 		Border border = BorderFactory.createLineBorder(Color.decode("#190707"));
 		txtInputRng.setBorder(border);
@@ -657,6 +680,12 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		txtInputCancellation.setBorder(border);
 	}
 	
+	/**
+	 * Check the probabilities of the class inputs add to equal 1
+	 * @return <code>boolean</code> - 
+	 * (true) if probabilities are valid, 
+	 * (false) if the probabilities do not add up to one
+	 */
 	private boolean checkProbs(){
 		if(Double.parseDouble(txtInputEconomy.getText())+Double.parseDouble(txtInputBusiness.getText())+Double.parseDouble(txtInputPremium.getText())+Double.parseDouble(txtInputFirst.getText())==1){
 			return true;
@@ -670,6 +699,10 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		}
 	}
 	
+	/**
+	 * Fill the input box with a default constant value
+	 * if no input is detected
+	 */
 	private void fillInTheBlanks(){
 		if(txtInputRng.getText().isEmpty()){
 			txtInputRng.setText(Integer.toString(Constants.DEFAULT_SEED));
