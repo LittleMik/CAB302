@@ -36,7 +36,9 @@ public class First extends Passenger {
 		return "No seats available in First";
 	}
 
-
+	/**
+	 * Since first is the highest class it cannot be upgraded further so the function just returns itself. 
+	 */
 	@Override
 	public Passenger upgrade() {
 		return this; 

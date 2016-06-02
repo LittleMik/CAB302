@@ -20,12 +20,9 @@ public class Business extends Passenger {
 	 * @see asgnPassengers.Passenger#Passenger(int,int)
 	 */
 	public Business(int bookingTime, int departureTime) throws PassengerException {
-		//if((bookingTime <= 0 )||(departureTime <= 0)||(bookingTime > departureTime)){
-		//	throw new PassengerException("Invalid parameters");
-		//}else{
 			super(bookingTime, departureTime);
 			this.passID = "J:" + this.passID;
-		//}
+
 	}
 	
 	/**
@@ -39,7 +36,10 @@ public class Business extends Passenger {
 	public String noSeatsMsg() {
 		return "No seats available in Business";
 	}
-
+	/**
+	 * upgrade passenger by copying the current properties and returning them as a passenger of the class above.
+	 * In this case it returns a passenger of the type first.
+	 */
 	@Override
 	public Passenger upgrade() {
 		Passenger newPass = new First();

@@ -29,7 +29,11 @@ public class Economy extends Passenger {
 	public String noSeatsMsg() {
 		return "No seats available in Economy";
 	}
-
+	
+	/**
+	 * upgrade passenger by copying the current properties and returning them as a passenger of the class above.
+	 * In this case it returns a passenger of the type premium.
+	 */
 	@Override
 	public Passenger upgrade() {
 		Passenger newPass = new Premium();

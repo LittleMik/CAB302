@@ -31,6 +31,10 @@ public class Premium extends Passenger {
 		
 	}
 
+	/**
+	 * upgrade passenger by copying the current properties and returning them as a passenger of the class above.
+	 * In this case it returns a passenger of the type Business.
+	 */
 	@Override
 	public Passenger upgrade() {
 		Passenger newPass = new Business();
