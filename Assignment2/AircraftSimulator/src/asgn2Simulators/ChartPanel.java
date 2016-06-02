@@ -22,8 +22,8 @@ public class ChartPanel{
 	
 	/**
 	 * ChartPanel Constructor
-	 * @param chartNumber - integer for chart identification
-	 * @param dataset - dataset for JFreeChart creation
+	 * @param <code>int</code> - chartNumber for chart identification
+	 * @param <code>XYDataset</code> - dataset for JFreeChart creation
 	 */
 	public ChartPanel(int chartNumber, XYDataset dataset){
 		this.chartNumber = chartNumber;
@@ -41,8 +41,8 @@ public class ChartPanel{
 	
 	/**
 	 * Create and Setup JFreeChart XYLineChart
-	 * @param XYDataset dataset
-	 * @return JFreeChart chart
+	 * @param <code>XYDataset</code> dataset for XYLineChart creation
+	 * @return <code>JFreeChart</code> created XYLineChart chart
 	 */
 	private JFreeChart createChart(XYDataset dataset) {
 		JFreeChart chart;
@@ -58,9 +58,10 @@ public class ChartPanel{
 	        plot.getRenderer().setSeriesPaint(3, Color.GRAY);
 	        plot.getRenderer().setSeriesPaint(4, Color.GREEN);
 	        plot.getRenderer().setSeriesPaint(5, Color.RED);
-	        //Setup XY Axis
+	        //Set X Axis from FIRST_FLIGHT to DURATION
 	        ValueAxis domain = plot.getDomainAxis();
 	        domain.setRange(Constants.FIRST_FLIGHT, Constants.DURATION);
+	        //Set Y Axis range to be auto
 	        ValueAxis range = plot.getRangeAxis();
 	        range.setAutoRange(true);
 		}else{
@@ -71,9 +72,10 @@ public class ChartPanel{
 			//Set Series Colours
 			plot.getRenderer().setSeriesPaint(0, Color.BLACK);
 			plot.getRenderer().setSeriesPaint(1, Color.RED);
-			//Setup XY Axis
+			//Set X Axis from start of simulation (0) to DURATION
 	        ValueAxis domain = plot.getDomainAxis();
 	        domain.setRange(0, Constants.DURATION);
+	        //Set Y Axis range to be auto
 	        ValueAxis range = plot.getRangeAxis();
 	        range.setAutoRange(true);
 		}
@@ -82,7 +84,7 @@ public class ChartPanel{
 	
 	/**
 	 * Get Chart
-	 * @return JFreeChart chart
+	 * @return <code>JFreeChart</code> chart
 	 */
 	public JFreeChart getChart(){
 		return this.chart;
@@ -90,7 +92,7 @@ public class ChartPanel{
 	
 	/**
 	 * Get ChartPanel Object
-	 * @return JFreeChart ChartPanel Object
+	 * @return <code>JFreeChart</code> ChartPanel Object
 	 */
 	public org.jfree.chart.ChartPanel getChartPanel(){
 		return this.chartPanel;

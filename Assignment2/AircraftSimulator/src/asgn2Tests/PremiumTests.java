@@ -19,6 +19,7 @@ import asgn2Passengers.Premium;
  */
 public class PremiumTests {
 	/** TEST VARIABLES **/
+	@SuppressWarnings("unused")
 	private Premium testPassenger, testPremiumPassenger;
 	
 	/**--------- PREMIUM: SETUP---------**/

@@ -31,6 +31,7 @@ public class B747 extends Aircraft {
 	 * See {@link asgn2Aircraft.Aircraft#Aircraft(String, int, int, int, int, int)}
 	 */
 	public B747(String flightCode,int departureTime) throws AircraftException {
+		//Call Aircraft constructor with default values and set type to B747
 		super(flightCode, departureTime, FIRST, BUSINESS, PREMIUM, ECONOMY);
 		this.type = "B747";
 	}
@@ -41,6 +42,7 @@ public class B747 extends Aircraft {
 	 * @see asgn2Aircraft.Aircraft#Aircraft(String, int, int, int, int, int) 
 	 */
 	public B747(String flightCode,int departureTime,int first, int business, int premium, int economy) throws AircraftException {
+		//Call Aircraft constructor with input values and set type to B747
 		super(flightCode, departureTime, first, business, premium, economy);
 		this.type = "B747";
 	}

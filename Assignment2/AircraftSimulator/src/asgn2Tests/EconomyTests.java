@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import asgn2Passengers.Economy;
-import asgn2Passengers.First;
 import asgn2Passengers.Passenger;
 import asgn2Passengers.PassengerException;
 import asgn2Passengers.Premium;
@@ -20,6 +19,7 @@ import asgn2Passengers.Premium;
  */
 public class EconomyTests {
 	/** TEST VARIABLES **/
+	@SuppressWarnings("unused")
 	private Economy testPassenger, testEconomyPassenger;
 	
 	/**--------- ECONOMY: SETUP---------**/

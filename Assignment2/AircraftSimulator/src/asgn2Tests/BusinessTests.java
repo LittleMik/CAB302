@@ -19,6 +19,7 @@ import asgn2Passengers.PassengerException;
  */
 public class BusinessTests {
 	/** TEST VARIABLES **/
+	@SuppressWarnings("unused")
 	private Business testPassenger, testBusinessPassenger;
 
 	/**--------- BUSINESS: SETUP ---------**/
