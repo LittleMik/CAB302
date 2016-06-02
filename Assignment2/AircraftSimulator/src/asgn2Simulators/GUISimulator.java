@@ -136,7 +136,6 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	    /** Constraints **/
 	    GridBagConstraints c = new GridBagConstraints();
 	    GridBagConstraints c2 = new GridBagConstraints();
-	    GridBagConstraints c3 = new GridBagConstraints();
 	    
 		/** Output Area **/
 	    txtOutPut = new JTextArea();
@@ -496,6 +495,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 				
 				//Enable Graph Switching
 				btnSwitch.setEnabled(true);
+				
+				//Disable Run Simulation
+				btnRun.setEnabled(false);
 			}else{
 				//Hide Graphs/Show Logs
 				this.getContentPane().remove(activeChartPanel.getChartPanel());
@@ -506,6 +508,9 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 				
 				//Disable Graph Switching
 				btnSwitch.setEnabled(false);
+				
+				//Enable Run Simulation
+				btnRun.setEnabled(true);
 			}
 			//Refresh Contents
 			this.revalidate();
@@ -669,7 +674,10 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 * Reset borders of the input fields
 	 */
 	private void resetBorders(){
+		//Setup Border
 		Border border = BorderFactory.createLineBorder(Color.decode("#190707"));
+		
+		//Set borders of all inputs
 		txtInputRng.setBorder(border);
 		txtInputQsize.setBorder(border);
 		txtInputMean.setBorder(border);
@@ -681,12 +689,16 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	}
 	
 	/**
-	 * Check the probabilities of the class inputs add to equal 1
+	 * Check the probabilities of the class are valid
 	 * @return <code>boolean</code> - 
 	 * (true) if probabilities are valid, 
 	 * (false) if the probabilities do not add up to one
 	 */
 	private boolean checkProbs(){
+		/*
+		 * Check the sum of all inputs is one
+		 * if so return true, otherwise alert user of probability error
+		 */
 		if(Double.parseDouble(txtInputEconomy.getText())+Double.parseDouble(txtInputBusiness.getText())+Double.parseDouble(txtInputPremium.getText())+Double.parseDouble(txtInputFirst.getText())==1){
 			return true;
 		}else{
@@ -704,6 +716,11 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	 * if no input is detected
 	 */
 	private void fillInTheBlanks(){
+		/*
+		 * Check the text field of each input for text
+		 * if empty, fill with a default value matching 
+		 * the input from Constants class
+		 */
 		if(txtInputRng.getText().isEmpty()){
 			txtInputRng.setText(Integer.toString(Constants.DEFAULT_SEED));
 		}else if(txtInputQsize.getText().isEmpty()){
