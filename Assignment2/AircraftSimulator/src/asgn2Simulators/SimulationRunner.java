@@ -46,7 +46,7 @@ public class SimulationRunner {
 		}
 		if(args.length == 10){
 			if(args[9].contains("-gui")){
-				GUISimulator gui = new GUISimulator("Assignment2");
+				GUISimulator gui = new GUISimulator("Assignment2", args);
 				gui.run();
 			}else if(args[9].contains("-nogui")){
 				
@@ -56,7 +56,7 @@ public class SimulationRunner {
 		}
 		
 		if((args.length == 1 && args[0].contains("-gui"))||(args.length == 9)||(args.length == 0)){
-			GUISimulator gui = new GUISimulator("Assignment2");
+			GUISimulator gui = new GUISimulator("Assignment 2", args);
 			gui.run();
 		}else{
 			try {
@@ -90,7 +90,7 @@ public class SimulationRunner {
 			}
 			SimulationRunner sr = new SimulationRunner(s,l);
 			try {
-				GUISimulator guiDontShow = new GUISimulator("Assignment2");
+				GUISimulator guiDontShow = new GUISimulator("Assignment2",args);
 				sr.runSimulation(guiDontShow);
 			} catch (Exception e) {
 				e.printStackTrace();

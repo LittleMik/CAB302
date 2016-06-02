@@ -58,6 +58,11 @@ public class A380Tests {
 	
 	
 	/**--------- A380: CONSTRUCTOR TESTS ---------**/	
+	/**Exception Testing
+	 * 
+	 * AircraftException - if isNull(flightCode) OR (departureTime <=0) OR ({first,business,premium,economy} <0)
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#A380(String, int)}.
 	 * @throws AircraftException 
@@ -66,7 +71,12 @@ public class A380Tests {
 	public void EmptyAirCode() throws AircraftException {
 		A380 exceptionFlight = new A380("",airDepartureTime);
 	}
-	
+
+	/**Exception Testing
+	 * 
+	 * AircraftException - if isNull(flightCode) OR (departureTime <=0) OR ({first,business,premium,economy} <0)
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#A380(String, int)}.
 	 * @throws AircraftException 
@@ -75,7 +85,12 @@ public class A380Tests {
 	public void NullCode() throws AircraftException {
 		A380 exceptionFlight = new A380(null,airDepartureTime);
 	}
-	
+
+	/**Exception Testing
+	 * 
+	 * AircraftException - if isNull(flightCode) OR (departureTime <=0) OR ({first,business,premium,economy} <0)
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#A380(String, int)}.
 	 * @throws AircraftException 
@@ -85,6 +100,11 @@ public class A380Tests {
 		A380 exceptionFlight = new A380(airCode,zeroVal);
 	}
 	
+	/**Exception Testing
+	 * 
+	 * AircraftException - if isNull(flightCode) OR (departureTime <=0) OR ({first,business,premium,economy} <0)
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#A380(String, int)}.
 	 * @throws AircraftException 
@@ -108,6 +128,14 @@ public class A380Tests {
 
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
 	 * @throws AircraftException, PassengerException
@@ -120,6 +148,14 @@ public class A380Tests {
 		tempFlight.cancelBooking(tempPassenger, cancellationTime);	
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
 	 * @throws AircraftException, PassengerException
@@ -132,6 +168,14 @@ public class A380Tests {
 		tempFlight.cancelBooking(tempPassenger, cancellationTime);	
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
 	 * @throws AircraftException, PassengerException
@@ -144,6 +188,14 @@ public class A380Tests {
 		tempFlight.cancelBooking(tempPassenger, cancellationTime);	
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
 	 * @throws AircraftException, PassengerException
@@ -154,6 +206,14 @@ public class A380Tests {
 		tempFlight.cancelBooking(tempPassenger, airDepartureTime+1);	
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
 	 * @throws AircraftException, PassengerException
@@ -164,6 +224,14 @@ public class A380Tests {
 		tempFlight.cancelBooking(tempPassenger, negativeVal);	
 	}
 	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is not Confirmed OR cancellationTime is invalid. See Passenger.cancelSeat(int)
+	 * AircraftException - 
+	 * if Passenger is not recorded in aircraft seating
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#cancelBooking(Passenger, int)}.
 	 * @throws AircraftException, PassengerException
@@ -294,6 +362,14 @@ public class A380Tests {
 	}
 	
 	/**--------- A380: CONFIRMBOOKINGS TEST ---------**/	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state OR confirmationTime OR departureTime is invalid. See Passenger.confirmSeat(int, int)
+	 * AircraftException - 
+	 * if no seats available in Passenger fare class.
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
 	 * @throws AircraftException, PassengerException
@@ -304,7 +380,14 @@ public class A380Tests {
 		tempPassenger.confirmSeat(confirmationTime, passDepartureTime);
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);	
 	}
-	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state OR confirmationTime OR departureTime is invalid. See Passenger.confirmSeat(int, int)
+	 * AircraftException - 
+	 * if no seats available in Passenger fare class.
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
 	 * @throws AircraftException, PassengerException
@@ -315,7 +398,14 @@ public class A380Tests {
 		tempPassenger.flyPassenger(flightTime);
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);	
 	}
-	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state OR confirmationTime OR departureTime is invalid. See Passenger.confirmSeat(int, int)
+	 * AircraftException - 
+	 * if no seats available in Passenger fare class.
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
 	 * @throws AircraftException, PassengerException
@@ -326,7 +416,14 @@ public class A380Tests {
 		tempPassenger.refusePassenger(19);
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);	
 	}
-	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state OR confirmationTime OR departureTime is invalid. See Passenger.confirmSeat(int, int)
+	 * AircraftException - 
+	 * if no seats available in Passenger fare class.
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
 	 * @throws AircraftException, PassengerException
@@ -335,7 +432,14 @@ public class A380Tests {
 	public void ConfirmDepTimeLessThenConTime() throws AircraftException, PassengerException {
 		tempFlight.confirmBooking(tempPassenger, airDepartureTime+1);	
 	}
-	
+	/**Exception Testing
+	 * 
+	 * PassengerException - 
+	 * if Passenger is in incorrect state OR confirmationTime OR departureTime is invalid. See Passenger.confirmSeat(int, int)
+	 * AircraftException - 
+	 * if no seats available in Passenger fare class.
+	 * 
+	 */
 	/**
 	 * Test method for {@link asgn2Aircraft.A380#confrimBooking(Passenger, int)}.
 	 * @throws AircraftException, PassengerException
