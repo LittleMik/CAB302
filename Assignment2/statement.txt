@@ -1,0 +1,24 @@
+/** Team Members **/
+Josh Hayes ()
+Michael Smallcombe (n9188207)
+
+/** Summary of Contribution **/
+Josh Hayes:
+	Aircraft Tests
+	Passengers Classes
+	GUISimulator Layout and
+	connection to SimulationRunner
+	GUITesting
+Michael Smallcombe:
+	Passenger Tests
+	Aircraft Classes
+	ChartPanel
+	SimulationRunner additions (for charts)
+	GUISimulator edits (for charts)
+	
+Statement of agreement :-
+
+
+/** Statement of Completeness **/
+Known Bugs: N/A (I'll wait on this)
+Charting version was attempted and completed
