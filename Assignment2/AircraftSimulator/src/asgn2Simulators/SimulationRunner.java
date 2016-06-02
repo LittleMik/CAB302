@@ -39,7 +39,13 @@ public class SimulationRunner {
 		final int NUM_ARGS = 9; 
 		Simulator s = null; 
 		Log l = null; 
-		if(args.length < 10){
+		if(args.length == 10){
+			if(args[9].contains("-gui")){
+				GUISimulator gui = new GUISimulator("Assignment2");
+				gui.run();
+			}
+		}
+		if((args.length == 1 && args[0].contains("-gui"))||(args.length == 9)||(args.length == 0)){
 			GUISimulator gui = new GUISimulator("Assignment2");
 			gui.run();
 		}else{
@@ -50,7 +56,12 @@ public class SimulationRunner {
 						break;
 					}
 					case 0: {
-						s = createSimulatorUsingArgs(args); 
+						s = new Simulator(); 
+						break;
+					}
+					case 1: {
+						runDatGui = 0;
+						s = new Simulator(); 
 						break;
 					}
 					case 10: {

@@ -57,19 +57,6 @@ public class A380Tests {
 	}
 	
 	
-	
-	//Testing constructor by checking class is made and that it is initially empty
-	@Test
-	public void flightEmptyTests() throws AircraftException, PassengerException {
-		assertEquals(tempFlight.flightEmpty(), true );
-	}
-	
-	@Test
-	public void flightNotEmptyTests() throws AircraftException, PassengerException {
-		tempFlight.confirmBooking(tempPassenger, confirmationTime);
-		assertEquals(tempFlight.flightEmpty(), false );
-	}
-	
 	//Testing constructor throws exceptions
 	@Test(expected = AircraftException.class)
 	public void EmptyCode() throws AircraftException {
@@ -90,7 +77,12 @@ public class A380Tests {
 	public void LessThenZeroDepTime() throws AircraftException {
 		A380 exceptionFlight = new A380(airCode,negativeVal);
 	}
-		
+	
+	
+	
+	
+	
+	
 	//Test appropriate exceptions are thrown for cancel booking
 	
 	//Changed in cancel book departureTime < cancel time... You had greater >. Because I think the 
@@ -252,6 +244,12 @@ public class A380Tests {
 	}
 	//Test appropriate exceptions are thrown for confirm booking
 	
+	
+	
+	
+	
+	
+	
 	@Test(expected = PassengerException.class)
 	public void ConfirmPassengerAlreadyConfirmed() throws AircraftException, PassengerException {
 		//change the state of passenger.
@@ -382,12 +380,67 @@ public class A380Tests {
 		assertEquals(tempFlight.getNumBusiness(),UnchangedFlight.getNumBusiness()+1 );
 	}
 	
+	
+	
+	
+	
+	//Testing constructor by checking class is made and that it is initially empty
+	@Test
+	public void flightEmptyTests() throws AircraftException, PassengerException {
+		assertEquals(tempFlight.flightEmpty(), true );
+	}
+	
+	@Test
+	public void flightNotEmptyTests() throws AircraftException, PassengerException {
+		tempFlight.confirmBooking(tempPassenger, confirmationTime);
+		assertEquals(tempFlight.flightEmpty(), false );
+	}
+	
+	
+	@Test
+	public void fullPlane() throws AircraftException, PassengerException{
+		fillThePlane();
+		assertEquals(smallFlight.flightFull(), true);
+	}
+	
+	@Test
+	public void NotfullPlane() throws AircraftException, PassengerException{
+		assertEquals(tempFlight.flightFull(), false);
+	}
+		
+	@Test
+	public void fullPlaneWithOneBooking() throws AircraftException, PassengerException{
+		tempFlight.confirmBooking(tempPassenger, confirmationTime);
+		assertEquals(tempFlight.flightFull(), false);
+	}
+	
+	
+	
+	
 	//Test the fly passengers function
 	@Test
 	public void flightPassengersTests() throws AircraftException, PassengerException {	
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
 		tempFlight.flyPassengers(flightTime);
 		assertEquals(tempPassenger.isFlown(), true);
+	}
+	
+	@Test
+	public void flightPassengersOfAllClassesTests() throws AircraftException, PassengerException {	
+		First tempFirst = new First(passBookingTime,passDepartureTime);
+		Economy tempEcon = new Economy(passBookingTime,passDepartureTime);
+		Premium tempPrem = new Premium(passBookingTime,passDepartureTime);
+		
+		tempFlight.confirmBooking(tempPrem, confirmationTime);
+		tempFlight.confirmBooking(tempEcon, confirmationTime);
+		tempFlight.confirmBooking(tempFirst, cancellationTime);
+		tempFlight.confirmBooking(tempPassenger, confirmationTime);
+		tempFlight.flyPassengers(flightTime);
+		assertEquals(tempPassenger.isFlown(), true);
+		assertEquals(tempEcon.isFlown(), true);
+		assertEquals(tempFirst.isFlown(), true);
+		assertEquals(tempPrem.isFlown(), true);
+		
 	}
 	
 	
@@ -418,61 +471,8 @@ public class A380Tests {
 		tempFlight.flyPassengers(flightTime);
 	}
 	
-	//Tests for seats available
-	@Test
-	public void seatsAvailableEmptyPlaneTest(){
-		assertEquals(tempFlight.seatsAvailable(tempPassenger),true);
-	}
+
 	
-	@Test
-	public void seatsAvailableFullPlaneTestTryAndSitBusiness() throws AircraftException, PassengerException{
-		fillThePlane();
-		assertEquals(smallFlight.seatsAvailable(tempPassenger),false);
-	}
-	
-	@Test
-	public void seatsAvailableFullPlaneTestTryAndSitFirst() throws AircraftException, PassengerException{
-		fillThePlane();
-		First tempFirst = new First(passBookingTime,passDepartureTime);
-		assertEquals(smallFlight.seatsAvailable(tempFirst),false);
-	}
-	
-	@Test
-	public void seatsAvailableFullPlaneTestTryAndSitPremium() throws AircraftException, PassengerException{
-		fillThePlane();
-		Premium tempPrem = new Premium(passBookingTime,passDepartureTime);
-		assertEquals(smallFlight.seatsAvailable(tempPrem),false);
-	}
-	
-	@Test
-	public void seatsAvailableFullPlaneTestTryAndSitEcon() throws AircraftException, PassengerException{
-		fillThePlane();
-		Economy tempEcon = new Economy(passBookingTime,passDepartureTime);
-		assertEquals(smallFlight.seatsAvailable(tempEcon),false);
-	}
-	@Test
-	public void seatsAvailableOneCustomerAddedTest() throws AircraftException, PassengerException{
-		tempFlight.confirmBooking(tempPassenger, confirmationTime);
-		assertEquals(tempFlight.seatsAvailable(tempPassenger),true);
-	}
-	//not sure if flight empty and full work because I filled the plane and tested these functions it they suggest that the plane is still empty...
-	//maybe as an idea see if the number of economy, first, business and premium = 0?
-	@Test
-	public void fullPlane() throws AircraftException, PassengerException{
-		fillThePlane();
-		assertEquals(smallFlight.flightFull(), true);
-	}
-	
-	@Test
-	public void NotfullPlane() throws AircraftException, PassengerException{
-		assertEquals(tempFlight.flightFull(), false);
-	}
-	
-	@Test
-	public void fullPlaneWithOneBooking() throws AircraftException, PassengerException{
-		tempFlight.confirmBooking(tempPassenger, confirmationTime);
-		assertEquals(tempFlight.flightFull(), false);
-	}
 	
 	@Test
 	public void getBookingsTestWithNoBooking() throws AircraftException{
@@ -614,6 +614,46 @@ public class A380Tests {
 		assertEquals(tempFlight.hasPassenger(tempEconTwo),false);
 	}
 
+	
+	//Tests for seats available
+	@Test
+	public void seatsAvailableEmptyPlaneTest(){
+		assertEquals(tempFlight.seatsAvailable(tempPassenger),true);
+	}
+	
+	@Test
+	public void seatsAvailableFullPlaneTestTryAndSitBusiness() throws AircraftException, PassengerException{
+		fillThePlane();
+		assertEquals(smallFlight.seatsAvailable(tempPassenger),false);
+	}
+	
+	@Test
+	public void seatsAvailableFullPlaneTestTryAndSitFirst() throws AircraftException, PassengerException{
+		fillThePlane();
+		First tempFirst = new First(passBookingTime,passDepartureTime);
+		assertEquals(smallFlight.seatsAvailable(tempFirst),false);
+	}
+	
+	@Test
+	public void seatsAvailableFullPlaneTestTryAndSitPremium() throws AircraftException, PassengerException{
+		fillThePlane();
+		Premium tempPrem = new Premium(passBookingTime,passDepartureTime);
+		assertEquals(smallFlight.seatsAvailable(tempPrem),false);
+	}
+	
+	@Test
+	public void seatsAvailableFullPlaneTestTryAndSitEcon() throws AircraftException, PassengerException{
+		fillThePlane();
+		Economy tempEcon = new Economy(passBookingTime,passDepartureTime);
+		assertEquals(smallFlight.seatsAvailable(tempEcon),false);
+	}
+	@Test
+	public void seatsAvailableOneCustomerAddedTest() throws AircraftException, PassengerException{
+		tempFlight.confirmBooking(tempPassenger, confirmationTime);
+		assertEquals(tempFlight.seatsAvailable(tempPassenger),true);
+	}
+	
+	
 	@Test
 	public void upgradeBookingsSingleBusiness() throws AircraftException, PassengerException{
 		tempFlight.confirmBooking(tempPassenger, confirmationTime);
@@ -696,6 +736,31 @@ public class A380Tests {
 		assertTrue(testFlight.getPassengers().get(1) instanceof Business);
 	}
 	
+	@Test
+	public void upgradeBookingsBusinessWhenFirstIsFullThenWithMoreBusiness() throws AircraftException, PassengerException{
+		A380 testFlight = new A380(airCode,airDepartureTime, 3*numberOne, 3*numberOne, 3*numberOne,3*numberOne);
+		Business tempBusiness = new Business(passBookingTime,passDepartureTime);
+		Business tempBusiness2 = new Business(passBookingTime,passDepartureTime);
+		
+		Premium tempPrem = new Premium(passBookingTime, passDepartureTime);
+		Premium tempPrem2 = new Premium(passBookingTime, passDepartureTime);
+		Premium tempPrem3 = new Premium(passBookingTime, passDepartureTime);
+		
+		testFlight.confirmBooking(tempBusiness, confirmationTime);
+		testFlight.confirmBooking(tempBusiness2, confirmationTime);
+		testFlight.confirmBooking(tempPrem, confirmationTime);
+		testFlight.confirmBooking(tempPrem2, confirmationTime);
+		testFlight.confirmBooking(tempPrem3, confirmationTime);
+		testFlight.confirmBooking(tempPassenger, confirmationTime);
+		testFlight.upgradeBookings();
+		assertTrue(testFlight.getPassengers().get(0) instanceof First);
+		assertTrue(testFlight.getPassengers().get(1) instanceof First);
+		assertTrue(testFlight.getPassengers().get(2) instanceof Business);
+		assertTrue(testFlight.getPassengers().get(3) instanceof Business);
+		assertTrue(testFlight.getPassengers().get(4) instanceof Business);
+		assertTrue(testFlight.getPassengers().get(5) instanceof First);
+		
+	}
 	
 	
 	
