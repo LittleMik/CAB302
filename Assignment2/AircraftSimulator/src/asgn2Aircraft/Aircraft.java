@@ -10,11 +10,7 @@ package asgn2Aircraft;
 import java.util.ArrayList;
 import java.util.List;
 
-import asgn2Passengers.Business;
-import asgn2Passengers.Economy;
-import asgn2Passengers.Passenger;
-import asgn2Passengers.PassengerException;
-import asgn2Passengers.Premium;
+import asgn2Passengers.*;
 import asgn2Simulators.Log;
 
 /**
