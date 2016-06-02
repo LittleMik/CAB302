@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -689,6 +691,17 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 	}
 	
 	/**
+	 * Method to round a double to a certain number of places
+	 */
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    BigDecimal bd = new BigDecimal(value);
+	    bd = bd.setScale(places, RoundingMode.HALF_UP);
+	    return bd.doubleValue();
+	}
+	
+	/**
 	 * Check the probabilities of the class are valid
 	 * @return <code>boolean</code> - 
 	 * (true) if probabilities are valid, 
@@ -699,7 +712,8 @@ public class GUISimulator extends JFrame implements ActionListener, Runnable {
 		 * Check the sum of all inputs is one
 		 * if so return true, otherwise alert user of probability error
 		 */
-		if(Double.parseDouble(txtInputEconomy.getText())+Double.parseDouble(txtInputBusiness.getText())+Double.parseDouble(txtInputPremium.getText())+Double.parseDouble(txtInputFirst.getText())==1){
+		Double probs = round(Double.parseDouble(txtInputEconomy.getText())+Double.parseDouble(txtInputBusiness.getText())+Double.parseDouble(txtInputPremium.getText())+Double.parseDouble(txtInputFirst.getText()),4);
+		if(probs == 1){
 			return true;
 		}else{
 			JOptionPane.showMessageDialog(null,"probabilities need to add to one");
