@@ -56,9 +56,11 @@ public class PremiumTests {
 		Passenger upgradedPassenger = testPassenger.upgrade();
 		/*
 		 * Verify upgradedPassenger was upgraded to Business Class,
-		 * passID first character 'J'
+		 * passID first character 'J' and passenger object is an
+		 * instance of the class to which it was upgraded (Business)
 		 */
 		assertEquals(upgradedPassenger.getPassID().charAt(0), 'J');
+		assertTrue(upgradedPassenger instanceof Business);
 	}
 	
 	/**

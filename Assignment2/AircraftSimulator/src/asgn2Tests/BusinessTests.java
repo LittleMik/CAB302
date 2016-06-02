@@ -56,9 +56,11 @@ public class BusinessTests {
 		Passenger upgradedPassenger = testPassenger.upgrade();
 		/*
 		 * Verify upgradedPassenger was upgraded to First Class,
-		 * passID first character 'F'
+		 * passID first character 'F' and passenger object is an
+		 * instance of the class to which it was upgraded (First)
 		 */
 		assertEquals(upgradedPassenger.getPassID().charAt(0), 'F');
+		assertTrue(upgradedPassenger instanceof First);
 	}
 	
 	/**
@@ -68,11 +70,4 @@ public class BusinessTests {
 	public void testNoSeatsMsg() {
 		assertEquals(testPassenger.noSeatsMsg(), "No seats available in Business");
 	}
-	
-	@Test
-	public void testt(){
-		assertTrue(!(testPassenger instanceof Business));
-	}
-	
-
 }

@@ -9,8 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import asgn2Passengers.Economy;
+import asgn2Passengers.First;
 import asgn2Passengers.Passenger;
 import asgn2Passengers.PassengerException;
+import asgn2Passengers.Premium;
 
 /**
  * @author Michael Smallcombe
@@ -63,9 +65,11 @@ public class EconomyTests {
 		Passenger upgradedPassenger = testPassenger.upgrade();
 		/*
 		 * Verify upgradedPassenger was upgraded to Premium Class,
-		 * passID first character 'P'
+		 * passID first character 'P' and passenger object is an
+		 * instance of the class to which it was upgraded (Premium)
 		 */
 		assertEquals(upgradedPassenger.getPassID().charAt(0), 'P');
+		assertTrue(upgradedPassenger instanceof Premium);
 	}
 
 
